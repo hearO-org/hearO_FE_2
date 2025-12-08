@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- 카테고리 -->
+        <TextView
+            android:id="@+id/tvCommentCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="커뮤니티"
+            android:textColor="#666"
+            android:textSize="12sp" />
+
+        <!-- 댓글 내용 -->
+        <TextView
+            android:id="@+id/tvCommentContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="댓글 내용이 들어갑니다"
+            android:textColor="#222"
+            android:textStyle="bold"
+            android:textSize="15sp" />
+
+        <!-- 시간 -->
+        <TextView
+            android:id="@+id/tvCommentTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="2시간 전"
+            android:textColor="#999"
+            android:textSize="12sp" />
+
+        <!-- 대댓글 -->
+        <TextView
+            android:id="@+id/tvCommentReply"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:background="#F3F3F3"
+            android:text="작성자 답글"
+            android:textColor="#444"
+            android:textSize="13sp"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:layout_marginBottom="12dp"
+    app:cardElevation="2dp"
+    app:cardCornerRadius="20dp"
+    android:backgroundTint="@android:color/white">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- 직무명 + 하트 -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvJobTitle"
+                android:text="사무 보조원(일반사무업무)"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#333333"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:id="@+id/btnWish"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/ic_heart_empty"
+                app:tint="#9CA3AF" />
+        </LinearLayout>
+
+        <!-- 회사명 -->
+        <TextView
+            android:id="@+id/tvCompany"
+            android:text="삼성생명보험(주)"
+            android:textSize="13sp"
+            android:textColor="#666666"
+            android:layout_marginTop="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!-- 지역, 거리, 조건 -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="6dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:src="@drawable/ic_location"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                app:tint="#6B7280"/>
+
+            <TextView
+                android:id="@+id/tvLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="서울특별시 서초구"
+                android:textSize="12sp"
+                android:textColor="#6B7280"
+                android:layout_marginStart="4dp"/>
+
+            <TextView
+                android:id="@+id/tvCondition"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="무관"
+                android:textSize="12sp"
+                android:textColor="#6B7280"
+                android:layout_marginStart="20dp"/>
+        </LinearLayout>
+
+        <!-- 급여 -->
+        <TextView
+            android:id="@+id/tvPay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="월 124만원"
+            android:textColor="#6366F1"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:layout_marginTop="20dp"/>
+
+        <!-- 계약직 / 상용직 -->
+        <TextView
+            android:id="@+id/tvJobType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="계약직"
+            android:textSize="11sp"
+            android:padding="6dp"
+            android:background="@drawable/job_type_chip"
+            android:textColor="#6B7280"
+            android:layout_marginTop="6dp"
+            android:layout_gravity="end"/>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

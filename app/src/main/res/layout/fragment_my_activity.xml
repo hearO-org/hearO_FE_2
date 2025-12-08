@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/hearo_bg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- 🔹 상단 헤더 -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- ========================================= -->
+        <!-- ① 상단 보라색 헤더 영역 (프로필 + 알림) -->
+        <!-- ========================================= -->
+        <RelativeLayout
+            android:id="@+id/topHeader"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:padding="20dp"
+            android:background="@drawable/home_header_bg">
+
+            <!-- 프로필 -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/imgProfile"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_profile_placeholder"
+                    android:background="@drawable/profile_circle"
+                    android:scaleType="centerCrop"/>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp">
+
+                    <TextView
+                        android:id="@+id/tvUserName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="hearO"
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/tvUserState"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="user"
+                        android:textColor="#F1F1F1"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- 알림 -->
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true">
+
+                <ImageView
+                    android:id="@+id/btnAlarm"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:src="@drawable/ic_alarm" />
+
+                <TextView
+                    android:id="@+id/tvAlarmBadge"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="top|end"
+                    android:background="@drawable/badge_circle_red"
+                    android:text="3"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="10sp"/>
+            </FrameLayout>
+        </RelativeLayout>
+
+
+        <!-- ========================================= -->
+        <!-- ② 하얀 헤더(소리 인식 텍스트) -->
+        <!-- ========================================= -->
+        <LinearLayout
+            android:id="@+id/soundHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@android:color/white"
+            android:padding="20dp"
+            android:elevation="2dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="소리 인식"
+                android:textColor="#222222"
+                android:textStyle="bold"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="AI 기반 실시간 소리 분석\n주변 소리를 인식하고 즉시 시각적으로 알려드려요"
+                android:textColor="#666666"
+                android:textSize="13sp"/>
+        </LinearLayout>
+
+    <!-- 🔹 탭 버튼 -->
+    <LinearLayout
+        android:id="@+id/tabContainer"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="12dp"
+        android:background="@android:color/white"
+        android:elevation="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tabBookmark"
+            android:text="북마크 3"
+            android:textStyle="bold"
+            android:padding="10dp"
+            android:background="@drawable/tab_selected_bg"
+            android:textColor="@color/purple_500"
+            android:layout_marginEnd="8dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="45dp" />
+
+        <TextView
+            android:id="@+id/tabLike"
+            android:text="좋아요 2"
+            android:padding="10dp"
+            android:background="@drawable/tab_unselected_bg"
+            android:textColor="#666"
+            android:layout_marginEnd="8dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="45dp" />
+
+        <TextView
+            android:id="@+id/tabComment"
+            android:text="댓글 3"
+            android:padding="10dp"
+            android:background="@drawable/tab_unselected_bg"
+            android:textColor="#666"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="45dp" />
+
+    </LinearLayout>
+
+    <!-- 🔹 콘텐츠 영역 -->
+    <FrameLayout
+        android:id="@+id/contentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+</LinearLayout>
+</LinearLayout>

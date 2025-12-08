@@ -1,0 +1,28 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/homeFragment"
+        android:icon="@drawable/ic_tab_sound"
+        android:title="소리인식" />
+
+    <item
+        android:id="@+id/dictionaryFragment"
+        android:icon="@drawable/ic_tab_book"
+        android:title="수어사전" />
+
+    <item
+        android:id="@+id/customInfoFragment"
+        android:icon="@drawable/ic_tab_book"
+        android:title="맞춤정보" />
+
+    <item
+        android:id="@+id/communityFragment"
+        android:icon="@drawable/ic_tab_community"
+        android:title="커뮤니티" />
+
+    <item
+        android:id="@+id/myPageFragment"
+        android:icon="@drawable/ic_tab_profile"
+        android:title="마이페이지" />
+
+</menu>

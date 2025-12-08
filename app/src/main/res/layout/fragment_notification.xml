@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hearo_bg">
+
+    <!-- ========================================= -->
+    <!-- ① 보라 헤더 (프로필 + 알림) -->
+    <!-- ========================================= -->
+    <RelativeLayout
+        android:id="@+id/topHeader"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:paddingHorizontal="20dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="10dp"
+        android:background="@drawable/home_header_bg">
+
+        <!-- 프로필 영역 -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/imgProfile"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_profile_placeholder"
+                android:background="@drawable/profile_circle"
+                android:scaleType="centerCrop" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_marginStart="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvUserName"
+                    android:text="hearO"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvUserState"
+                    android:text="user"
+                    android:textColor="#F1F1F1"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 알림 설정 버튼 -->
+        <ImageView
+            android:id="@+id/btnAlarm"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:src="@drawable/ic_alarm"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+
+
+    <!-- ========================================= -->
+    <!-- ② 소리 인식 제목 영역 (화이트 배경) -->
+    <!-- ========================================= -->
+    <LinearLayout
+        android:id="@+id/soundHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@android:color/white"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="18dp"
+        android:elevation="2dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="알림"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#222" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="알림을 확인하세요"
+            android:textSize="13sp"
+            android:textColor="#666"
+            android:layout_marginTop="6dp" />
+    </LinearLayout>
+
+
+    <!-- ========================================= -->
+    <!-- ③ 필터 버튼 영역 -->
+    <!-- ========================================= -->
+    <LinearLayout
+        android:id="@+id/filterContainer"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:padding="10dp"
+        android:elevation="2dp">
+
+        <TextView
+            android:id="@+id/filterAll"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="전체 알림"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:background="@drawable/tab_selected_bg"
+            android:textColor="@color/purple_500" />
+
+        <TextView
+            android:id="@+id/filterImportant"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="중요"
+            android:textSize="14sp"
+            android:textColor="#777"
+            android:background="@drawable/tab_unselected_bg" />
+
+        <TextView
+            android:id="@+id/filterSystem"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="시스템"
+            android:textSize="14sp"
+            android:textColor="#777"
+            android:background="@drawable/tab_unselected_bg" />
+
+        <TextView
+            android:id="@+id/filterCommunity"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="커뮤니티"
+            android:textSize="14sp"
+            android:textColor="#777"
+            android:background="@drawable/tab_unselected_bg" />
+    </LinearLayout>
+
+
+    <!-- ========================================= -->
+    <!-- ④ 알림 리스트 -->
+    <!-- ========================================= -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerNotification"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="16dp" />
+
+</LinearLayout>

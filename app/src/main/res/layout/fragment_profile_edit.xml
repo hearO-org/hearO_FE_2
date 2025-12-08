@@ -1,0 +1,650 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/hearo_bg">
+
+    <!-- 상단 프로필 헤더 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:padding="20dp"
+            android:background="@drawable/home_header_bg">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvUserName"
+                    android:text="hearO"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvUserState"
+                    android:text="user"
+                    android:textColor="#EDEDED"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/btnAlarm"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_alarm" />
+        </RelativeLayout>
+
+        <!-- 흰색 헤더 -->
+        <LinearLayout
+            android:background="@android:color/white"
+            android:padding="20dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="프로필 수정"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#222" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="개인정보 및 설정관리"
+                android:textColor="#666"
+                android:textSize="13sp"
+                android:layout_marginTop="4dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <!-- 탭 메뉴 -->
+    <LinearLayout
+        android:id="@+id/tabContainer"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:gravity="center"
+        android:background="@android:color/white"
+        android:padding="8dp"
+        android:elevation="3dp">
+
+        <TextView
+            android:id="@+id/tabBasic"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="match_parent"
+            android:text="기본 정보"
+            android:textColor="@color/purple_500"
+            android:textStyle="bold"
+            android:background="@drawable/keyword_unselected" />
+
+        <TextView
+            android:id="@+id/tabPrivacy"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="match_parent"
+            android:text="프라이버시"
+            android:textColor="#777" />
+
+        <TextView
+            android:id="@+id/tabAlarm"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="match_parent"
+            android:text="알림 설정"
+            android:textColor="#777" />
+    </LinearLayout>
+
+    <!-- 스크롤 전체 영역 -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- ⭐⭐⭐ 기본정보 탭 영역 ⭐⭐⭐ -->
+            <LinearLayout
+                android:id="@+id/boxBasicInfo"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!-- 기본 정보 카드 -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="18dp"
+                    app:cardElevation="2dp"
+                    android:layout_marginBottom="16dp">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:padding="20dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="기본 정보"
+                            android:textStyle="bold"
+                            android:textColor="#333"
+                            android:textSize="15sp" />
+
+                        <EditText
+                            android:id="@+id/etName"
+                            style="@style/HearoInput"
+                            android:hint="이름"
+                            android:layout_marginTop="7dp" />
+
+                        <EditText
+                            android:id="@+id/etEmail"
+                            style="@style/HearoInput"
+                            android:hint="이메일"
+                            android:layout_marginTop="7dp" />
+
+                        <EditText
+                            android:id="@+id/etPhone"
+                            style="@style/HearoInput"
+                            android:hint="전화번호"
+                            android:layout_marginTop="7dp" />
+
+                        <EditText
+                            android:id="@+id/etRegion"
+                            style="@style/HearoInput"
+                            android:hint="지역"
+                            android:layout_marginTop="7dp" />
+
+                        <EditText
+                            android:id="@+id/etBirth"
+                            style="@style/HearoInput"
+                            android:hint="생년"
+                            android:layout_marginTop="7dp" />
+
+                        <EditText
+                            android:id="@+id/etIntro"
+                            android:minLines="4"
+                            style="@style/HearoInputLarge"
+                            android:hint="자기소개 입력"
+                            android:layout_marginTop="7dp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+
+                <!-- 사용자 유형 카드 -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/userTypeCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="18dp"
+                    android:layout_marginBottom="16dp"
+                    app:cardElevation="2dp">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:padding="20dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="사용자 유형"
+                            android:textStyle="bold"
+                            android:textColor="#333"
+                            android:textSize="15sp"
+                            android:layout_marginBottom="10dp" />
+
+                        <TextView
+                            android:id="@+id/userType1"
+                            style="@style/HearoSelectable"
+                            android:text="청각장애인" />
+
+                        <TextView
+                            android:id="@+id/userType2"
+                            style="@style/HearoSelectable"
+                            android:text="가족·보호자"
+                            android:layout_marginTop="7dp" />
+
+                        <TextView
+                            android:id="@+id/userType3"
+                            style="@style/HearoSelectable"
+                            android:text="전문가"
+                            android:layout_marginTop="7dp" />
+
+                        <TextView
+                            android:id="@+id/userType4"
+                            style="@style/HearoSelectable"
+                            android:text="일반인"
+                            android:layout_marginTop="7dp" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+
+                <!-- 관심 분야 카드 -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="18dp"
+                    app:cardElevation="2dp">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:padding="20dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="관심 분야"
+                            android:textStyle="bold"
+                            android:textColor="#333"
+                            android:textSize="15sp" />
+
+                        <!-- 태그 입력 -->
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <EditText
+                                android:id="@+id/etAddTag"
+                                android:hint="관심 분야 추가"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="45dp"
+                                android:padding="12dp"
+                                android:background="@drawable/search_box_bg" />
+
+                            <TextView
+                                android:id="@+id/btnAddTag"
+                                android:text="+"
+                                android:textColor="@color/purple_500"
+                                android:textSize="24sp"
+                                android:layout_width="45dp"
+                                android:layout_height="45dp"
+                                android:gravity="center" />
+                        </LinearLayout>
+
+                        <!-- 태그 목록 -->
+                        <com.google.android.material.chip.ChipGroup
+                            android:id="@+id/tagGroup"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            app:chipSpacing="8dp" />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+
+            <!-- ⭐⭐⭐ 프라이버시 탭 영역 ⭐⭐⭐ -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/boxPrivacy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="18dp"
+                android:layout_marginBottom="16dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:padding="20dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="개인정보 공개 설정"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:textColor="#333" />
+
+                    <!-- 이메일 공개 -->
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="이메일 공개"
+                                android:textStyle="bold"
+                                android:textColor="#222" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="다른 사용자가 내 이메일을 볼 수 있습니다"
+                                android:textColor="#888"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <Switch
+                            android:id="@+id/privacyEmail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <!-- 전화번호 공개 -->
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="전화번호 공개"
+                                android:textStyle="bold"
+                                android:textColor="#222" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="다른 사용자가 내 전화번호를 볼 수 있습니다"
+                                android:textColor="#888"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <Switch
+                            android:id="@+id/privacyPhone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <!-- 지역 공개 -->
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="지역 공개"
+                                android:textStyle="bold"
+                                android:textColor="#222" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="다른 사용자가 내 지역을 볼 수 있습니다"
+                                android:textColor="#888"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <Switch
+                            android:id="@+id/privacyRegion"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="true" />
+                    </LinearLayout>
+
+                    <!-- DM 허용 -->
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="직접 메시지 허용"
+                                android:textStyle="bold"
+                                android:textColor="#222" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="다른 사용자가 개인 메시지를 보낼 수 있습니다"
+                                android:textColor="#888"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <Switch
+                            android:id="@+id/privacyDM"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <!-- ⭐⭐⭐ 알림 설정 탭 영역 ⭐⭐⭐ -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/boxAlarm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="2dp"
+                android:layout_marginBottom="20dp">
+
+                <LinearLayout
+                    android:padding="20dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="알림 설정"
+                        android:textStyle="bold"
+                        android:textColor="#333"
+                        android:textSize="16sp" />
+
+                    <!-- 커뮤니티 알림 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="16dp">
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="커뮤니티 알림"
+                                android:textStyle="bold"
+                                android:textColor="#222" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="댓글, 좋아요, 새 게시물 알림"
+                                android:textColor="#888"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <Switch
+                            android:id="@+id/notiCommunity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="true" />
+                    </LinearLayout>
+
+                    <!-- 맞춤 정보 알림 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="16dp">
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="맞춤 정보 알림"
+                                android:textStyle="bold"
+                                android:textColor="#222" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="새로운 정책, 지원 정보 알림"
+                                android:textColor="#888"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <Switch
+                            android:id="@+id/notiCustom"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <!-- 소리 감지 알림 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="16dp">
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="소리 감지 알림"
+                                android:textStyle="bold"
+                                android:textColor="#222" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="중요한 소리 감지 시 알림"
+                                android:textColor="#888"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <Switch
+                            android:id="@+id/notiSound"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <!-- 주간 리포트 -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="16dp">
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="주간 리포트"
+                                android:textStyle="bold"
+                                android:textColor="#222" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="주간 활동 요약 및 추천 정보"
+                                android:textColor="#888"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <Switch
+                            android:id="@+id/notiWeekly"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
+

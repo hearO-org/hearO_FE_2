@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hearo_bg">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- ========================================= -->
+        <!-- ① 상단 보라색 헤더 영역 (프로필 + 알림) -->
+        <!-- ========================================= -->
+        <RelativeLayout
+            android:id="@+id/topHeader"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:padding="20dp"
+            android:background="@drawable/home_header_bg">
+
+            <!-- 프로필 -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/imgProfile"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_profile_placeholder"
+                    android:background="@drawable/profile_circle"
+                    android:scaleType="centerCrop"/>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp">
+
+                    <TextView
+                        android:id="@+id/tvUserName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="hearO"
+                        android:textColor="@android:color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/tvUserState"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="user"
+                        android:textColor="#F1F1F1"
+                        android:textSize="12sp"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- 알림 -->
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true">
+
+                <ImageView
+                    android:id="@+id/btnAlarm"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:src="@drawable/ic_alarm" />
+
+                <TextView
+                    android:id="@+id/tvAlarmBadge"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="top|end"
+                    android:background="@drawable/badge_circle_red"
+                    android:text="3"
+                    android:gravity="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="10sp"/>
+            </FrameLayout>
+        </RelativeLayout>
+
+
+
+
+        <!-- ===================================================== -->
+        <!-- ② 하얀색 서브 헤더 (제목 + 설명) -->
+        <!-- ===================================================== -->
+        <!-- ===================================================== -->
+        <!-- ② 하얀색 서브 헤더 (뒤로가기 + 제목 한 줄로 정렬) -->
+        <!-- ===================================================== -->
+        <LinearLayout
+            android:id="@+id/headerSection"
+            android:background="@android:color/white"
+            android:padding="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="2dp"
+            android:orientation="vertical">
+
+            <!-- ← 수어 상세 (한 줄) -->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/btnBack"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:src="@drawable/ic_back"
+                    android:layout_marginEnd="10dp"/>
+
+                <TextView
+                    android:id="@+id/tvTitleDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="수어 상세"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="#222222"/>
+
+                <ImageView
+                    android:id="@+id/btnFavorite"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_heart_empty"
+                    android:layout_marginStart="170dp" />
+            </LinearLayout>
+
+            <!-- 설명 텍스트 -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="단어 학습 및 연습"
+                android:textSize="13sp"
+                android:textColor="#666666"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="단어를 검색하여 수어 동작을 배워보세요"
+                android:textSize="13sp"
+                android:textColor="#666666"/>
+        </LinearLayout>
+
+
+
+        <!-- ========================================= -->
+        <!-- ② 단어 제목 + 설명 카드 -->
+        <!-- ========================================= -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:background="@drawable/card_bg"
+                android:padding="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvWord"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="충성"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:textColor="#222222" />
+
+                <TextView
+                    android:id="@+id/tvTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="일상생활/수어"
+                    android:textSize="11sp"
+                    android:textColor="#4F6DF5"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="4dp"
+                    android:background="@drawable/count_chip_bg"
+                    android:layout_marginTop="6dp" />
+
+                <TextView
+                    android:id="@+id/tvDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="오른 주먹의 5지컬을 펴서 바닥이 밖으로 향하게 세운 다음..."
+                    android:textColor="#555555"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tvCategory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="카테고리: 기타"
+                    android:textColor="#777777"
+                    android:textSize="12sp"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:id="@+id/tvViews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="조회수: 1.6만회"
+                    android:textColor="#777777"
+                    android:textSize="12sp"
+                    android:layout_marginTop="4dp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+
+
+        <!-- ========================================= -->
+        <!-- ③ 수어 동작 영상 카드 -->
+        <!-- ========================================= -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="20dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:background="@drawable/card_bg"
+                android:padding="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="수어 동작 영상"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="#333" />
+
+                <ImageView
+                    android:id="@+id/imgVideoThumbnail"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:layout_marginTop="12dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/sample_reference"
+                    android:background="@drawable/card_bg" />
+
+                <TextView
+                    android:id="@+id/btnReplay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:drawableLeft="@drawable/ic_refresh"
+                    android:text="다시보기"
+                    android:textSize="12sp"
+                    android:textColor="#4F6DF5" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+
+        <!-- ========================================= -->
+        <!-- ④ 참고 이미지 -->
+        <!-- ========================================= -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:background="@drawable/card_bg"
+                android:padding="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="참고 이미지"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="#333"/>
+
+                <ImageView
+                    android:id="@+id/imgReference"
+                    android:layout_width="match_parent"
+                    android:layout_height="260dp"
+                    android:layout_marginTop="12dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/sample_reference"/>
+            </LinearLayout>
+        </LinearLayout>
+
+
+
+        <!-- ========================================= -->
+        <!-- ⑤ 마지막 버튼 -->
+        <!-- ========================================= -->
+        <TextView
+            android:id="@+id/btnOpenDictionary"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="한국 수어 사전 보기"
+            android:textColor="#4F6DF5"
+            android:textStyle="bold"
+            android:layout_margin="20dp"
+            android:background="@drawable/card_bg"/>
+    </LinearLayout>
+</ScrollView>

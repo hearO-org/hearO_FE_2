@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#DDD6FE"
+    android:gravity="center"
+    android:padding="24dp">
+
+    <!-- 로고 -->
+    <ImageView
+        android:id="@+id/imgLogo"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        app:srcCompat="@drawable/ic_hearo_logo"
+        android:layout_marginBottom="80dp"/>
+
+    <!-- 카카오 로그인 버튼 -->
+    <ImageButton
+        android:id="@+id/btnKakaoLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/kakao_login"
+        android:scaleType="fitXY"
+        android:layout_marginBottom="12dp" />
+
+    <!-- 일반 로그인 버튼 -->
+    <Button
+        android:id="@+id/btnEmailLogin"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="일반 로그인"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:backgroundTint="#FFFFFF"
+        android:layout_marginBottom="16dp"
+        android:radius="12dp"/>
+
+    <!-- 회원가입으로 이동 -->
+    <TextView
+        android:id="@+id/tvGoSignup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="계정이 없으신가요? 회원가입"
+        android:textSize="16sp"
+        android:textColor="#000000"/>
+</LinearLayout>

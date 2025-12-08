@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/hearo_bg">
+
+    <!-- ======================= -->
+    <!-- 🟣 상단 헤더             -->
+    <!-- ======================= -->
+    <RelativeLayout
+        android:id="@+id/topHeader"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="20dp"
+        android:background="@drawable/home_header_bg">
+
+        <!-- 프로필 -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_profile_placeholder"
+                android:background="@drawable/profile_circle"
+                android:scaleType="centerCrop" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_marginStart="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="hearO"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:text="user"
+                    android:textSize="12sp"
+                    android:textColor="#F1F1F1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 알림 -->
+        <ImageView
+            android:id="@+id/btnAlarm"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_alarm" />
+
+        <TextView
+            android:id="@+id/tvAlarmBadge"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_alignEnd="@id/btnAlarm"
+            android:layout_marginTop="-6dp"
+            android:gravity="center"
+            android:text="3"
+            android:textColor="@android:color/white"
+            android:textSize="10sp"
+            android:background="@drawable/badge_circle_red" />
+    </RelativeLayout>
+
+
+    <!-- ======================= -->
+    <!-- 글쓰기 헤더 카드       -->
+    <!-- ======================= -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:padding="22dp"
+        android:gravity="center_vertical"
+        android:elevation="3dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="글쓰기"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#222" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="커뮤니티에 글을 작성해보세요"
+                android:textSize="13sp"
+                android:textColor="#666"
+                android:layout_marginTop="6dp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnSubmitPost"
+            android:layout_width="90dp"
+            android:layout_height="36dp"
+            android:text="작성하기"
+            android:textColor="@android:color/white"
+            android:textSize="13sp"
+            android:backgroundTint="#6F56F5" />
+    </LinearLayout>
+
+
+    <!-- ======================= -->
+    <!-- 스크롤 영역             -->
+    <!-- ======================= -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:padding="20dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <!-- ================= 카테고리 ================= -->
+            <androidx.cardview.widget.CardView
+                android:padding="22dp"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="1dp"
+                android:layout_marginBottom="25dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="카테고리"
+                    android:textSize="14sp"
+                    android:textColor="#555"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginTop="10dp"/>
+
+                <!-- Flexbox로 칩 자동 줄바꿈 / 정렬 -->
+                <com.google.android.flexbox.FlexboxLayout
+                    android:id="@+id/categoryContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginStart="7dp"
+                    app:flexWrap="wrap"
+                    app:flexDirection="row"
+                    app:justifyContent="flex_start">
+
+                    <TextView style="@style/TabChipStyle" android:text="자유 토론" />
+                    <TextView style="@style/TabChipStyle" android:text="질문" />
+                    <TextView style="@style/TabChipStyle" android:text="후기/경험" />
+                    <TextView style="@style/TabChipStyle" android:text="정보 공유" />
+                    <TextView style="@style/TabChipStyle" android:text="모임/만남" />
+
+                </com.google.android.flexbox.FlexboxLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <!-- ================= 제목 ================= -->
+            <androidx.cardview.widget.CardView
+                android:layout_marginBottom="25dp"
+                android:padding="22dp"
+                app:cardCornerRadius="18dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="제목"
+                    android:textSize="14sp"
+                    android:textColor="#555"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginTop="10dp"/>
+
+                <EditText
+                    android:id="@+id/etTitle"
+                    android:hint="제목을 입력해주세요 (최소 5자)"
+                    android:textSize="16sp"
+                    android:padding="14dp"
+                    android:lineSpacingExtra="6dp"
+                    android:minHeight="50dp"
+                    android:background="@android:color/transparent"
+                    android:layout_marginTop="40dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/tvTitleCount"
+                    android:text="0/100"
+                    android:textSize="12sp"
+                    android:textColor="#888"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:gravity="end"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </androidx.cardview.widget.CardView>
+
+
+            <!-- ================= 내용 ================= -->
+            <androidx.cardview.widget.CardView
+                android:layout_marginBottom="25dp"
+                android:padding="22dp"
+                app:cardCornerRadius="18dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="내용"
+                    android:textSize="14sp"
+                    android:textColor="#555"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginTop="10dp"/>
+
+                <EditText
+                    android:id="@+id/etContent"
+                    android:hint="내용을 입력해주세요 (최소 10자)"
+                    android:gravity="top"
+                    android:minHeight="180dp"
+                    android:padding="14dp"
+                    android:lineSpacingExtra="6dp"
+                    android:textSize="16sp"
+                    android:background="@android:color/transparent"
+                    android:layout_marginTop="40dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/tvContentCount"
+                    android:text="0/2000"
+                    android:textSize="12sp"
+                    android:textColor="#888"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:gravity="end"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </androidx.cardview.widget.CardView>
+
+
+            <!-- ================= 이미지 첨부 ================= -->
+            <androidx.cardview.widget.CardView
+                android:layout_marginBottom="25dp"
+                android:padding="22dp"
+                app:cardCornerRadius="18dp"
+                android:layout_width="match_parent"
+                android:layout_height="150dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="이미지 첨부"
+                    android:textSize="14sp"
+                    android:textColor="#555"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginTop="10dp"/>
+
+                <LinearLayout
+                    android:id="@+id/btnUploadImage"
+                    android:background="@drawable/search_box_bg"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_marginTop="50dp"
+                    android:layout_height="80dp"
+                    android:layout_width="match_parent">
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/ic_camera" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="이미지 업로드 (0/5)"
+                        android:textSize="13sp"
+                        android:textColor="#777"
+                        android:layout_marginTop="8dp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <!-- ================= 태그 ================= -->
+            <androidx.cardview.widget.CardView
+                android:padding="22dp"
+                app:cardCornerRadius="18dp"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                app:cardElevation="1dp"
+                android:layout_marginBottom="25dp">
+
+                <!-- 제목 -->
+                <TextView
+                    android:text="태그"
+                    android:textColor="#555"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginTop="10dp"/>
+
+                <!-- 입력 필드 (둥근 박스 형태) -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="40dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp"
+                    android:background="@drawable/tag_input_bg">
+
+                    <EditText
+                        android:id="@+id/etTag"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:hint="태그 입력 후 엔터"
+                        android:background="@android:color/transparent"
+                        android:textSize="14sp"
+                        android:padding="0dp"
+                        android:gravity="center_vertical" />
+
+                    <ImageView
+                        android:id="@+id/btnAddTag"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:src="@drawable/ic_add_gray" />
+                </LinearLayout>
+
+                <!-- 인기 태그 텍스트 -->
+
+
+                <!-- 인기 태그 리스트 -->
+                <com.google.android.flexbox.FlexboxLayout
+                    android:id="@+id/popularTagContainer"
+                    android:layout_marginTop="14dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:flexWrap="wrap"
+                    app:justifyContent="flex_start"
+                    app:alignItems="flex_start" />
+
+                <!-- 제한 문구 -->
+                <TextView
+                    android:id="@+id/tvTagLimit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="태그는 최대 5개까지 추가할 수 있습니다 (0/5)"
+                    android:textColor="#777"
+                    android:textSize="12sp"
+                    android:layout_marginTop="170dp"
+                    android:layout_marginStart="7dp"/>
+
+            </androidx.cardview.widget.CardView>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

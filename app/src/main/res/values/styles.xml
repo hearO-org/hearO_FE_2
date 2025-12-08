@@ -1,0 +1,90 @@
+<resources>
+
+    <style name="HearoInput">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:padding">14dp</item>
+        <item name="android:textColor">#333333</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:background">@drawable/bg_input_box</item>
+    </style>
+
+    <style name="HearoSelectable">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:textColor">#444444</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:background">@drawable/bg_selectable_default</item>
+    </style>
+
+    <style name="HearoInputLarge">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">120dp</item>   <!-- 큰 입력칸 -->
+        <item name="android:padding">14dp</item>
+        <item name="android:gravity">top</item>           <!-- 텍스트 위쪽 정렬 -->
+        <item name="android:textColor">#333333</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:background">@drawable/bg_input_box</item>
+        <item name="android:inputType">textMultiLine</item>
+    </style>
+
+
+
+    <!-- 구인탭 기본 스타일 -->
+    <style name="JobTab">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">32dp</item>
+        <item name="android:paddingLeft">14dp</item>
+        <item name="android:paddingRight">14dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">#374151</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:background">@drawable/keyword_unselected</item>
+        <item name="android:layout_marginRight">8dp</item>
+    </style>
+
+    <style name="TagStyle">
+        <item name="android:background">@drawable/job_type_chip</item>
+        <item name="android:textColor">#FF5A5A</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:padding">6dp</item>
+        <item name="android:layout_marginEnd">6dp</item>
+    </style>
+
+    <style name="TabChipStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">32dp</item>
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingEnd">12dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">#666666</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:background">@drawable/keyword_unselected</item>
+        <item name="android:layout_marginEnd">10dp</item>
+    </style>
+
+    <style name="TagStyleSmall">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:textColor">#4F6CF0</item>
+        <item name="android:padding">4dp</item>
+        <item name="android:background">@drawable/tag_small_bg</item>
+        <item name="android:layout_marginEnd">6dp</item>
+    </style>
+
+    <style name="TagStyleHot">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:textColor">#FF5A5A</item>
+        <item name="android:padding">4dp</item>
+        <item name="android:background">@drawable/tag_hot_bg</item>
+    </style>
+
+
+
+
+</resources>

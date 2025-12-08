@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hearo_bg">
+
+    <!-- =========================== -->
+    <!-- ① 보라색 상단 헤더          -->
+    <!-- =========================== -->
+    <RelativeLayout
+        android:id="@+id/topHeader"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:padding="20dp"
+        android:background="@drawable/home_header_bg">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imgProfile"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_profile_placeholder"
+                android:background="@drawable/profile_circle"
+                android:scaleType="centerCrop" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp">
+
+                <TextView
+                    android:id="@+id/tvUserName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="hearO"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvUserState"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="user"
+                    android:textColor="#F1F1F1"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/btnAlarm"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:src="@drawable/ic_alarm" />
+
+            <TextView
+                android:id="@+id/tvAlarmBadge"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_gravity="top|end"
+                android:gravity="center"
+                android:text="3"
+                android:textColor="@android:color/white"
+                android:textSize="10sp"
+                android:background="@drawable/badge_circle_red" />
+        </FrameLayout>
+    </RelativeLayout>
+
+    <!-- =========================== -->
+    <!-- ② 제목 헤더                 -->
+    <!-- =========================== -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="@android:color/white"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="댓글 상세보기"
+            android:textColor="#222"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="해당 댓글과 모든 답글 목록"
+            android:textColor="#666"
+            android:textSize="13sp"
+            android:layout_marginTop="6dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <!-- =========================== -->
+    <!-- ③ 스크롤 영역               -->
+    <!-- =========================== -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- 🔥 원 댓글 내용 TextView 추가 -->
+            <TextView
+                android:id="@+id/tvReplyContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="댓글 내용"
+                android:textSize="15sp"
+                android:textColor="#222222"
+                android:background="@android:color/white"
+                android:padding="16dp"
+                android:layout_marginBottom="20dp"
+                android:elevation="2dp" />
+
+            <!-- 🔹 답글 타이틀 -->
+            <TextView
+                android:id="@+id/ReplyCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="답글 5개"
+                android:textColor="#222"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginBottom="12dp"/>
+
+            <!-- 🔹 답글 리스트 -->
+            <LinearLayout
+                android:id="@+id/replyDetailContainer"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- =========================== -->
+    <!-- ④ 답글 작성 입력창          -->
+    <!-- =========================== -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:background="@android:color/white"
+        android:padding="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
+
+        <EditText
+            android:id="@+id/etReplyDetail"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:hint="답글을 작성하세요..."
+            android:background="@drawable/search_box_bg"
+            android:padding="10dp" />
+
+        <Button
+            android:id="@+id/btnSendReplyDetail"
+            android:text="작성"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:textColor="@android:color/white"
+            android:backgroundTint="#6F56F5" />
+    </LinearLayout>
+
+</LinearLayout>

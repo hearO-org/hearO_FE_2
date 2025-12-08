@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="2dp"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- 제목 + 카테고리 + 하트 -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- 제목 -->
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="삼권 분립 제도"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:textColor="#222222"/>
+
+            <!-- 카테고리 -->
+            <TextView
+                android:id="@+id/tvCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="전문용어/수어"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                android:textSize="11sp"
+                android:textColor="#4F6DF5"
+                android:background="@drawable/count_chip_bg"/>
+
+            <!-- ❤ 즐겨찾기 버튼 -->
+            <ImageView
+                android:id="@+id/btnFavorite"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/ic_heart_empty" />
+        </LinearLayout>
+
+
+        <!-- 설명 -->
+        <TextView
+            android:id="@+id/tvDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="오른 주먹의 1,2,3 ... 바닥이 밖으로 향하게..."
+            android:textSize="13sp"
+            android:textColor="#555555"/>
+
+
+        <!-- 하단 정보 -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginTop="10dp">
+
+            <!-- 조회수 -->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:src="@drawable/ic_eye" />
+
+                <TextView
+                    android:id="@+id/tvViewCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="260회"
+                    android:textSize="12sp"
+                    android:textColor="#777777"
+                    android:layout_marginStart="4dp"/>
+            </LinearLayout>
+
+            <!-- 상세보기 -->
+            <TextView
+                android:id="@+id/tvDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="상세보기 >"
+                android:textSize="12sp"
+                android:textColor="#4F6DF5"
+                android:layout_marginStart="270dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

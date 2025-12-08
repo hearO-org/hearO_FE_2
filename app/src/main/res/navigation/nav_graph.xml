@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <!-- ====================================== -->
+    <!--  HomeFragment                          -->
+    <!-- ====================================== -->
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.hearo2.home.HomeFragment"
+        android:label="홈"
+        tools:layout="@layout/fragment_home" />
+
+
+    <!-- ====================================== -->
+    <!--  Community List                        -->
+    <!-- ====================================== -->
+    <fragment
+        android:id="@+id/communityFragment"
+        android:name="com.example.hearo2.community.CommunityFragment"
+        android:label="커뮤니티"
+        tools:layout="@layout/fragment_community">
+
+        <action
+            android:id="@+id/action_communityFragment_to_communityDetailFragment"
+            app:destination="@id/communityDetailFragment" />
+
+        <action
+            android:id="@+id/action_communityFragment_to_communityWriteFragment"
+            app:destination="@id/communityWriteFragment" />
+    </fragment>
+
+
+    <!-- ====================================== -->
+    <!--  Community Detail                      -->
+    <!-- ====================================== -->
+    <fragment
+        android:id="@+id/communityDetailFragment"
+        android:name="com.example.hearo2.community.CommunityDetailFragment"
+        android:label="게시글 상세"
+        tools:layout="@layout/fragment_community_detail">
+
+        <argument
+            android:name="postId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+
+        <action
+            android:id="@+id/action_communityDetailFragment_to_replyThreadFragment"
+            app:destination="@id/replyThreadFragment" />
+    </fragment>
+
+
+    <!-- 게시글 작성 -->
+    <fragment
+        android:id="@+id/communityWriteFragment"
+        android:name="com.example.hearo2.community.CommunityWriteFragment"
+        android:label="게시글 작성"
+        tools:layout="@layout/fragment_community_write" />
+
+
+    <!-- 댓글 스레드 -->
+    <fragment
+        android:id="@+id/replyThreadFragment"
+        android:name="com.example.hearo2.community.ReplyThreadFragment"
+        android:label="댓글 스레드"
+        tools:layout="@layout/fragment_reply_thread">
+
+        <argument
+            android:name="commentId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
+
+
+    <!-- ====================================== -->
+    <!--  Custom Info (맞춤 정보 목록)         -->
+    <!-- ====================================== -->
+    <fragment
+        android:id="@+id/customInfoFragment"
+        android:name="com.example.hearo2.custominfo.CustomInfoFragment"
+        android:label="맞춤 정보"
+        tools:layout="@layout/fragment_custom_info">
+
+        <action
+            android:id="@+id/action_customInfo_to_jobDetail"
+            app:destination="@id/jobDetailFragment" />
+    </fragment>
+
+
+    <!-- ====================================== -->
+    <!--  Job Detail (맞춤 정보 상세)          -->
+    <!-- ====================================== -->
+    <fragment
+        android:id="@+id/jobDetailFragment"
+        android:name="com.example.hearo2.custominfo.JobDetailFragment"
+        android:label="구인 상세"
+        tools:layout="@layout/fragment_job_detail">
+
+        <argument android:name="title"     app:argType="string" />
+        <argument android:name="company"   app:argType="string" />
+        <argument android:name="location"  app:argType="string" />
+        <argument android:name="condition" app:argType="string" />
+        <argument android:name="pay"       app:argType="string" />
+        <argument android:name="type"      app:argType="string" />
+        <argument android:name="desc"      app:argType="string" />
+    </fragment>
+
+
+    <!-- ====================================== -->
+    <!--  Dictionary                           -->
+    <!-- ====================================== -->
+    <fragment
+        android:id="@+id/dictionaryFragment"
+        android:name="com.example.hearo2.dictionary.DictionaryFragment"
+        android:label="수어 사전"
+        tools:layout="@layout/fragment_dictionary">
+
+        <action
+            android:id="@+id/action_dictionaryFragment_to_dictionaryDetailFragment"
+            app:destination="@id/dictionaryDetailFragment" />
+    </fragment>
+
+
+    <!-- ====================================== -->
+    <!--  Dictionary Detail                    -->
+    <!-- ====================================== -->
+    <fragment
+        android:id="@+id/dictionaryDetailFragment"
+        android:name="com.example.hearo2.dictionary.DictionaryDetailFragment"
+        android:label="사전 상세"
+        tools:layout="@layout/fragment_dictionary_detail">
+
+        <argument android:name="title"      app:argType="string" />
+        <argument android:name="description" app:argType="string" />
+        <argument android:name="category"   app:argType="string" />
+        <argument android:name="views"      app:argType="integer" />
+        <argument android:name="imageRes"   app:argType="integer" />
+    </fragment>
+
+
+    <!-- ====================================== -->
+    <!--  MyPage                                -->
+    <!-- ====================================== -->
+    <fragment
+        android:id="@+id/myPageFragment"
+        android:name="com.example.hearo2.mypage.MyPageFragment"
+        android:label="마이페이지"
+        tools:layout="@layout/fragment_mypage">
+
+        <action
+            android:id="@+id/action_myPage_to_profileEdit"
+            app:destination="@id/profileEditFragment"/>
+
+        <action
+            android:id="@+id/action_myPage_to_myActivity"
+            app:destination="@id/myActivityFragment"/>
+    </fragment>
+
+
+    <!-- 프로필 수정 -->
+    <fragment
+        android:id="@+id/profileEditFragment"
+        android:name="com.example.hearo2.mypage.ProfileEditFragment"
+        android:label="프로필 수정"
+        tools:layout="@layout/fragment_profile_edit"/>
+
+
+    <!-- 내 활동 -->
+    <fragment
+        android:id="@+id/myActivityFragment"
+        android:name="com.example.hearo2.mypage.MyActivityFragment"
+        android:label="내 활동"
+        tools:layout="@layout/fragment_my_activity"/>
+
+</navigation>

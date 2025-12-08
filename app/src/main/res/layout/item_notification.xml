@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    app:cardElevation="2dp"
+    app:cardCornerRadius="16dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- 상단: 파란 점 + 카테고리 + 중요 아이콘 -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- 🔵 새 알림 표시 dot -->
+            <View
+                android:id="@+id/newDot"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:background="@drawable/dot_blue"
+                android:layout_marginEnd="6dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvCategory"
+                android:text="소리 감지"
+                android:textColor="#555"
+                android:textSize="12sp"
+                android:layout_marginEnd="6dp"/>
+
+            <!-- ❗ 중요 알림 아이콘 -->
+            <ImageView
+                android:id="@+id/imgImportant"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_warning_red"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <!-- 제목 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvTitle"
+            android:text="알림 제목"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="#222"
+            android:layout_marginTop="4dp" />
+
+        <!-- 내용 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvContent"
+            android:text="알림 설명 내용이 표시됩니다."
+            android:textColor="#666"
+            android:textSize="13sp"
+            android:layout_marginTop="6dp"/>
+
+        <!-- 시간 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvTime"
+            android:text="5분 전"
+            android:textColor="#999"
+            android:textSize="11sp"
+            android:layout_marginTop="8dp" />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
