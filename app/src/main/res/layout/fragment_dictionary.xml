@@ -70,8 +70,7 @@
                     android:id="@+id/btnAlarm"
                     android:layout_width="26dp"
                     android:layout_height="26dp"
-                    android:src="@drawable/ic_alarm"
-                    android:tint="@android:color/white" />
+                    android:src="@drawable/ic_alarm" />
 
                 <TextView
                     android:id="@+id/tvAlarmBadge"
@@ -165,6 +164,84 @@
                     android:hint="수어 단어를 검색하세요..."
                     android:background="@android:color/transparent"/>
             </LinearLayout>
+
+            <HorizontalScrollView
+                android:id="@+id/categoryScroll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:layout_marginTop="10dp"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/categoryContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <!-- 전체(선택됨) -->
+                    <TextView
+                        android:id="@+id/catAll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:paddingHorizontal="16dp"
+                        android:gravity="center"
+                        android:text="전체  15,094"
+                        android:textColor="@android:color/white"
+                        android:textSize="13sp"
+                        android:background="@drawable/category_selected_bg"
+                        android:layout_marginEnd="8dp"
+                        android:clickable="true"
+                        android:focusable="true"/>
+
+                    <!-- 정치 -->
+                    <TextView
+                        android:id="@+id/catPolitics"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:paddingHorizontal="16dp"
+                        android:gravity="center"
+                        android:text="정치  1,240"
+                        android:textColor="#6B7280"
+                        android:textSize="13sp"
+                        android:background="@drawable/category_unselected_bg"
+                        android:layout_marginEnd="8dp"
+                        android:clickable="true"
+                        android:focusable="true"/>
+
+                    <!-- 경제 -->
+                    <TextView
+                        android:id="@+id/catEconomy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:paddingHorizontal="16dp"
+                        android:gravity="center"
+                        android:text="경제  2,156"
+                        android:textColor="#6B7280"
+                        android:textSize="13sp"
+                        android:background="@drawable/category_unselected_bg"
+                        android:layout_marginEnd="8dp"
+                        android:clickable="true"
+                        android:focusable="true"/>
+
+                    <!-- 인간 -->
+                    <TextView
+                        android:id="@+id/catHuman"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:paddingHorizontal="16dp"
+                        android:gravity="center"
+                        android:text="인간"
+                        android:textColor="#6B7280"
+                        android:textSize="13sp"
+                        android:background="@drawable/category_unselected_bg"
+                        android:layout_marginEnd="8dp"
+                        android:clickable="true"
+                        android:focusable="true"/>
+
+                </LinearLayout>
+            </HorizontalScrollView>
 
             <ImageView
                 android:id="@+id/btnFilter"

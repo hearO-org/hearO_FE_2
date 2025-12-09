@@ -7,17 +7,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.hearo2.R
+import com.example.hearo2.custominfo.model.JobItem
+import com.example.hearo2.custominfo.viewmodel.JobViewModel
+import com.example.hearo2.custominfo.viewmodel.UiState
 import com.example.hearo2.databinding.FragmentCustomInfoBinding
 import androidx.navigation.fragment.findNavController
+import com.example.hearo2.custominfo.adapter.JobAdapter
 
 class CustomInfoFragment : Fragment() {
 
     private lateinit var binding: FragmentCustomInfoBinding
+    private val viewModel: JobViewModel by viewModels()
     private lateinit var adapter: JobAdapter
-    private lateinit var fullList: MutableList<JobData>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,52 +35,60 @@ class CustomInfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupJobList()
+        setupRecycler()
+        setupObservers()
         setupSearch()
         setupJobFilter()
+
+        // 🔥 첫 화면 진입 시 실시간 구인 정보 API 호출
+        viewModel.loadJobList(requireContext())
     }
 
-    // --------------------------------------------------------------------
-    // 1) 구인 리스트 데이터 세팅
-    // --------------------------------------------------------------------
-    private fun setupJobList() {
-
-        fullList = mutableListOf(
-            JobData("사무 보조원(일반사무업무)", "삼성생명보험(주)", "서울특별시 서초구", "무관", "월 124만원", "정규직"),
-            JobData("환경 미화원", "국립한국해양대학교", "부산광역시 영도구", "무관", "시급 10,030원", "서비스직"),
-            JobData("건물 보수원 및 영선원", "주식회사 사람모아", "전북 전주시", "무관", "시급 10,030원", "생산직")
-        )
-
-        adapter = JobAdapter(fullList) { selected ->
-            openDetail(selected)
-        }
-
+    // ---------------------------------------------------------
+    // 1) RecyclerView 설정
+    // ---------------------------------------------------------
+    private fun setupRecycler() {
+        adapter = JobAdapter(emptyList()) { item -> openDetail(item) }
         binding.rvJobs.layoutManager = LinearLayoutManager(requireContext())
         binding.rvJobs.adapter = adapter
     }
 
-    // --------------------------------------------------------------------
-    // 2) 상세 페이지로 이동
-    // --------------------------------------------------------------------
-    private fun openDetail(item: JobData) {
+    // ---------------------------------------------------------
+    // 2) API 데이터 관찰
+    // ---------------------------------------------------------
+    private fun setupObservers() {
+        viewModel.jobListState.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is UiState.Loading -> showLoading(true)
 
-        val action = CustomInfoFragmentDirections
-            .actionCustomInfoToJobDetail(
-                item.title,
-                item.company,
-                item.location,
-                item.condition,
-                item.pay,
-                item.type,
-                "여기에 상세 내용이 들어갑니다."
-            )
+                is UiState.Success -> {
+                    showLoading(false)
+                    adapter.updateList(state.data)
+                }
 
+                is UiState.Error -> {
+                    showLoading(false)
+                    Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.rvJobs.visibility = if (isLoading) View.INVISIBLE else View.VISIBLE
+    }
+
+    // ---------------------------------------------------------
+    // 3) 상세 페이지 이동
+    // ---------------------------------------------------------
+    private fun openDetail(item: JobItem) {
+        val action = CustomInfoFragmentDirections.actionCustomInfoToJobDetail(item.rno)
         findNavController().navigate(action)
     }
 
-    // --------------------------------------------------------------------
-    // 3) 검색 기능
-    // --------------------------------------------------------------------
+    // ---------------------------------------------------------
+    // 4) 검색 기능
+    // ---------------------------------------------------------
     private fun setupSearch() {
         binding.etJobSearch.setOnEditorActionListener { _, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH ||
@@ -90,25 +103,20 @@ class CustomInfoFragment : Fragment() {
     private fun performSearch() {
         val query = binding.etJobSearch.text.toString().trim()
 
-        val filtered = if (query.isEmpty()) {
-            fullList
-        } else {
-            fullList.filter {
-                it.title.contains(query, ignoreCase = true) ||
-                        it.company.contains(query, ignoreCase = true) ||
-                        it.location.contains(query, ignoreCase = true)
-            }
+        if (query.isEmpty()) {
+            viewModel.loadJobList(requireContext())
+            return
         }
 
-        adapter.updateList(filtered)
+        val filters = mapOf("keyword" to query)
+        viewModel.searchJobs(requireContext(), filters)
     }
 
-    // --------------------------------------------------------------------
-    // 4) 직종 필터 기능 (전체 / 정규직 / 사무직 / 서비스직 / 생산직)
-    // --------------------------------------------------------------------
+    // ---------------------------------------------------------
+    // 5) 직종 필터
+    // ---------------------------------------------------------
     private fun setupJobFilter() {
 
-        // 필터 버튼 TextView 연결
         val tabs = listOf(
             binding.tabAll,
             binding.tabRegular,
@@ -117,39 +125,36 @@ class CustomInfoFragment : Fragment() {
             binding.tabFactory
         )
 
-        var selectedTab: TextView = binding.tabAll // 초기값 = 전체
+        var selectedTab: TextView = binding.tabAll
 
-        // ---- UI 업데이트 함수 ----
         fun updateTabUI(selected: TextView) {
             tabs.forEach { tab ->
                 if (tab == selected) {
-                    tab.setBackgroundResource(R.drawable.keyword_selected)
+                    tab.setBackgroundResource(com.example.hearo2.R.drawable.keyword_selected)
                     tab.setTextColor(resources.getColor(android.R.color.white))
                 } else {
-                    tab.setBackgroundResource(R.drawable.keyword_unselected)
-                    tab.setTextColor(resources.getColor(R.color.gray_700))
+                    tab.setBackgroundResource(com.example.hearo2.R.drawable.keyword_unselected)
+                    tab.setTextColor(resources.getColor(com.example.hearo2.R.color.gray_700))
                 }
             }
         }
 
-        // ---- 필터 적용 함수 ----
-        fun applyFilter(category: String) {
-            val filtered = when (category) {
-                "전체" -> fullList
-                else -> fullList.filter { it.type.contains(category) }
+        fun callFilterAPI(category: String) {
+            if (category == "전체") {
+                viewModel.loadJobList(requireContext())
+            } else {
+                val filterMap = mapOf("empType" to category)
+                viewModel.searchJobs(requireContext(), filterMap)
             }
-            adapter.updateList(filtered)
         }
 
-        // ---- 클릭 이벤트 등록 ----
         tabs.forEach { tab ->
             tab.setOnClickListener {
-                selectedTab = tab
                 updateTabUI(tab)
-                applyFilter(tab.text.toString())
+                callFilterAPI(tab.text.toString())
             }
         }
 
-        updateTabUI(selectedTab) // 초기 UI 적용
+        updateTabUI(selectedTab)
     }
 }

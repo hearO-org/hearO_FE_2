@@ -6,7 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hearo2.databinding.ActivitySignupTermsBinding
 import com.example.hearo2.network.api.AuthService
-import com.example.hearo2.network.RetrofitClient
+import com.example.hearo2.network.api.RetrofitClient
 import com.example.hearo2.network.request.SignUpRequest
 import com.example.hearo2.network.response.SignUpResponse
 import retrofit2.Call

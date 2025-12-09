@@ -9,7 +9,7 @@ import com.example.hearo2.MainActivity
 import com.example.hearo2.R
 import com.example.hearo2.auth.AuthPrefs
 import com.example.hearo2.databinding.ActivitySignupKeywordsBinding
-import com.example.hearo2.network.RetrofitClient
+import com.example.hearo2.network.api.RetrofitClient
 import com.example.hearo2.network.api.AuthService
 import com.example.hearo2.network.request.OnboardingRequest
 import com.example.hearo2.network.response.OnboardingResponse

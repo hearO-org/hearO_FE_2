@@ -1,4 +1,4 @@
-package com.example.hearo2.network
+package com.example.hearo2.network.api
 
 import android.content.Context
 import com.example.hearo2.auth.AuthPrefs

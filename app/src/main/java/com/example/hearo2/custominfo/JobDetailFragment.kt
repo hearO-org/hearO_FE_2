@@ -4,14 +4,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.example.hearo2.R
+import com.example.hearo2.custominfo.viewmodel.JobViewModel
+import com.example.hearo2.custominfo.viewmodel.UiState
 import com.example.hearo2.databinding.FragmentJobDetailBinding
+import com.example.hearo2.custominfo.model.JobDetailData
 
 class JobDetailFragment : Fragment() {
 
     private lateinit var binding: FragmentJobDetailBinding
-    private var isFavorite = false
+
+    private val viewModel: JobViewModel by activityViewModels()
+
+    private var rno: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,28 +32,34 @@ class JobDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        loadJobData()
+        rno = arguments?.getString("rno") ?: ""
+
+        if (rno.isBlank()) {
+            Toast.makeText(requireContext(), "잘못된 접근입니다.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        initObservers()
         initListeners()
+
+        // 🔥 상세 조회 API 호출
+        viewModel.loadJobDetail(requireContext(), rno)
     }
 
-    // -----------------------------
-    // 뒤로가기 + 찜 버튼
-    // -----------------------------
     private fun initListeners() {
-
-        // 뒤로가기
         binding.btnBack.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
-        // 하트 토글
         binding.btnFavorite.setOnClickListener {
-            isFavorite = !isFavorite
-            updateFavoriteIcon()
+            toggleFavoriteIcon()
         }
     }
 
-    private fun updateFavoriteIcon() {
+    private var isFavorite = false
+
+    private fun toggleFavoriteIcon() {
+        isFavorite = !isFavorite
         val icon = if (isFavorite)
             R.drawable.ic_heart_filled
         else
@@ -54,63 +68,68 @@ class JobDetailFragment : Fragment() {
         binding.btnFavorite.setImageResource(icon)
     }
 
-    // -----------------------------
-    // 데이터를 UI에 바인딩
-    // -----------------------------
-    private fun loadJobData() {
+    private fun initObservers() {
+        viewModel.jobDetailState.observe(viewLifecycleOwner) { state ->
+            when (state) {
 
-        val title = arguments?.getString("title") ?: ""
-        val company = arguments?.getString("company") ?: ""
-        val location = arguments?.getString("location") ?: ""
-        val condition = arguments?.getString("condition") ?: ""
-        val pay = arguments?.getString("pay") ?: ""
-        val type = arguments?.getString("type") ?: ""
-        val content = arguments?.getString("content") ?: "상세 내용이 없습니다."
+                is UiState.Loading -> showLoading(true)
 
-        // 상단 제목
-        binding.tvTitleDetail.text = title
+                is UiState.Success -> {
+                    showLoading(false)
+                    applyJobDetail(state.data)
+                }
 
-        // include 내부 job_item 레이아웃에 접근
-        val include = binding.includeJobCard
-
-        include.tvJobTitle.text = title
-        include.tvCompany.text = company
-        include.tvLocation.text = location
-        include.tvCondition.text = condition
-        include.tvPay.text = pay
-        include.tvJobType.text = type
-
-        // 상세내용 적용
-        binding.tvContent.text = content
+                is UiState.Error -> {
+                    showLoading(false)
+                    Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
-    // -----------------------------
-    // newInstance (데이터 전달)
-    // -----------------------------
-    companion object {
-        fun newInstance(
-            title: String,
-            company: String,
-            location: String,
-            condition: String,
-            pay: String,
-            type: String,
-            content: String
-        ): JobDetailFragment {
+    private fun showLoading(isLoading: Boolean) {
+        binding.includeJobCard.root.visibility =
+            if (isLoading) View.INVISIBLE else View.VISIBLE
 
-            val fragment = JobDetailFragment()
-            val args = Bundle()
+        binding.tvContent.visibility =
+            if (isLoading) View.INVISIBLE else View.VISIBLE
+    }
 
-            args.putString("title", title)
-            args.putString("company", company)
-            args.putString("location", location)
-            args.putString("condition", condition)
-            args.putString("pay", pay)
-            args.putString("type", type)
-            args.putString("content", content)
+    private fun applyJobDetail(detail: JobDetailData) {
 
-            fragment.arguments = args
-            return fragment
+        binding.tvTitleDetail.text = detail.jobNm
+
+        val card = binding.includeJobCard
+        card.tvJobTitle.text = detail.jobNm
+        card.tvCompany.text = detail.busplaName
+        card.tvLocation.text = detail.compAddr
+        card.tvCondition.text = detail.reqCareer ?: "-"
+        card.tvPay.text = formatSalary(detail.salaryType, detail.salary)
+        card.tvJobType.text = detail.empType
+
+        val contentText = """
+• 회사명: ${detail.busplaName}
+• 주소: ${detail.compAddr}
+• 고용 형태: ${detail.empType}
+• 경력: ${detail.reqCareer ?: "무관"}
+• 학력: ${detail.reqEduc ?: "무관"}
+• 급여: ${formatSalary(detail.salaryType, detail.salary)}
+• 모집 기간: ${detail.termDate ?: "-"}
+• 담당 기관: ${detail.regganName ?: "-"}
+• 연락처: ${detail.cntctNo ?: "-"}
+""".trimIndent()
+
+        binding.tvContent.text = contentText
+    }
+
+    private fun formatSalary(type: String?, value: String?): String {
+        if (value.isNullOrBlank()) return "-"
+
+        return when (type) {
+            "월급" -> "월 $value"
+            "시급" -> "시급 $value"
+            "연봉" -> "연봉 $value"
+            else -> value
         }
     }
 }

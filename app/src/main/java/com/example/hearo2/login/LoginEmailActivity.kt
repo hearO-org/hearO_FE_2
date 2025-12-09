@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.hearo2.MainActivity
 import com.example.hearo2.auth.AuthPrefs
 import com.example.hearo2.databinding.ActivityLoginEmailBinding
-import com.example.hearo2.network.RetrofitClient
+import com.example.hearo2.network.api.RetrofitClient
 import com.example.hearo2.network.api.AuthService
 import com.example.hearo2.network.request.LoginRequest
 import com.example.hearo2.network.response.LoginResponse

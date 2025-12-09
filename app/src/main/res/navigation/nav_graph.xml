@@ -14,7 +14,6 @@
         android:label="홈"
         tools:layout="@layout/fragment_home" />
 
-
     <!-- ====================================== -->
     <!--  Community List                        -->
     <!-- ====================================== -->
@@ -32,7 +31,6 @@
             android:id="@+id/action_communityFragment_to_communityWriteFragment"
             app:destination="@id/communityWriteFragment" />
     </fragment>
-
 
     <!-- ====================================== -->
     <!--  Community Detail                      -->
@@ -53,14 +51,12 @@
             app:destination="@id/replyThreadFragment" />
     </fragment>
 
-
     <!-- 게시글 작성 -->
     <fragment
         android:id="@+id/communityWriteFragment"
         android:name="com.example.hearo2.community.CommunityWriteFragment"
         android:label="게시글 작성"
         tools:layout="@layout/fragment_community_write" />
-
 
     <!-- 댓글 스레드 -->
     <fragment
@@ -100,13 +96,10 @@
         android:label="구인 상세"
         tools:layout="@layout/fragment_job_detail">
 
-        <argument android:name="title"     app:argType="string" />
-        <argument android:name="company"   app:argType="string" />
-        <argument android:name="location"  app:argType="string" />
-        <argument android:name="condition" app:argType="string" />
-        <argument android:name="pay"       app:argType="string" />
-        <argument android:name="type"      app:argType="string" />
-        <argument android:name="desc"      app:argType="string" />
+        <!-- 🔥 수정된 부분: rno 하나만 남김 -->
+        <argument
+            android:name="rno"
+            app:argType="string" />
     </fragment>
 
 
@@ -124,10 +117,6 @@
             app:destination="@id/dictionaryDetailFragment" />
     </fragment>
 
-
-    <!-- ====================================== -->
-    <!--  Dictionary Detail                    -->
-    <!-- ====================================== -->
     <fragment
         android:id="@+id/dictionaryDetailFragment"
         android:name="com.example.hearo2.dictionary.DictionaryDetailFragment"
@@ -140,7 +129,6 @@
         <argument android:name="views"      app:argType="integer" />
         <argument android:name="imageRes"   app:argType="integer" />
     </fragment>
-
 
     <!-- ====================================== -->
     <!--  MyPage                                -->
@@ -160,16 +148,12 @@
             app:destination="@id/myActivityFragment"/>
     </fragment>
 
-
-    <!-- 프로필 수정 -->
     <fragment
         android:id="@+id/profileEditFragment"
         android:name="com.example.hearo2.mypage.ProfileEditFragment"
         android:label="프로필 수정"
         tools:layout="@layout/fragment_profile_edit"/>
 
-
-    <!-- 내 활동 -->
     <fragment
         android:id="@+id/myActivityFragment"
         android:name="com.example.hearo2.mypage.MyActivityFragment"
