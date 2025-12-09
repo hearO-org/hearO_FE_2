@@ -29,6 +29,7 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version = "1.9.23" }
 
 # ⭐ 추가된 부분
 androidx-navigation-safeargs-kotlin = { id = "androidx.navigation.safeargs.kotlin", version = "2.7.7" }

@@ -88,7 +88,7 @@
 
 
     <!-- ====================================== -->
-    <!--  Job Detail (맞춤 정보 상세)          -->
+    <!--  Job Detail                            -->
     <!-- ====================================== -->
     <fragment
         android:id="@+id/jobDetailFragment"
@@ -96,7 +96,6 @@
         android:label="구인 상세"
         tools:layout="@layout/fragment_job_detail">
 
-        <!-- 🔥 수정된 부분: rno 하나만 남김 -->
         <argument
             android:name="rno"
             app:argType="string" />
@@ -104,7 +103,7 @@
 
 
     <!-- ====================================== -->
-    <!--  Dictionary                           -->
+    <!--  Dictionary                            -->
     <!-- ====================================== -->
     <fragment
         android:id="@+id/dictionaryFragment"
@@ -117,18 +116,22 @@
             app:destination="@id/dictionaryDetailFragment" />
     </fragment>
 
+    <!-- ====================================== -->
+    <!-- Dictionary Detail                      -->
+    <!-- ====================================== -->
     <fragment
         android:id="@+id/dictionaryDetailFragment"
         android:name="com.example.hearo2.dictionary.DictionaryDetailFragment"
         android:label="사전 상세"
         tools:layout="@layout/fragment_dictionary_detail">
 
-        <argument android:name="title"      app:argType="string" />
-        <argument android:name="description" app:argType="string" />
-        <argument android:name="category"   app:argType="string" />
-        <argument android:name="views"      app:argType="integer" />
-        <argument android:name="imageRes"   app:argType="integer" />
+        <!-- 🔥 기존 title/description/category/views/imageRes 모두 삭제 -->
+        <!-- 🔥 signId 하나만 받는다 -->
+        <argument
+            android:name="id"
+            app:argType="integer" />
     </fragment>
+
 
     <!-- ====================================== -->
     <!--  MyPage                                -->

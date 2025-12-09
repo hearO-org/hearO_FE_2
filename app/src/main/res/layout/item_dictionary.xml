@@ -9,101 +9,116 @@
     android:background="@android:color/white">
 
     <LinearLayout
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:padding="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!-- 제목 + 카테고리 + 하트 -->
+        <!-- 썸네일 이미지 (API thumbnailUrl) -->
+        <ImageView
+            android:id="@+id/imgThumbnail"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:scaleType="centerCrop"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/card_bg"
+            android:src="@drawable/sample_reference"/>
+
+        <!-- 오른쪽 내용 영역 -->
         <LinearLayout
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content">
 
-            <!-- 제목 -->
-            <TextView
-                android:id="@+id/tvTitle"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="삼권 분립 제도"
-                android:textSize="17sp"
-                android:textStyle="bold"
-                android:textColor="#222222"/>
-
-            <!-- 카테고리 -->
-            <TextView
-                android:id="@+id/tvCategory"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="전문용어/수어"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="4dp"
-                android:textSize="11sp"
-                android:textColor="#4F6DF5"
-                android:background="@drawable/count_chip_bg"/>
-
-            <!-- ❤ 즐겨찾기 버튼 -->
-            <ImageView
-                android:id="@+id/btnFavorite"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:layout_marginStart="10dp"
-                android:src="@drawable/ic_heart_empty" />
-        </LinearLayout>
-
-
-        <!-- 설명 -->
-        <TextView
-            android:id="@+id/tvDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:text="오른 주먹의 1,2,3 ... 바닥이 밖으로 향하게..."
-            android:textSize="13sp"
-            android:textColor="#555555"/>
-
-
-        <!-- 하단 정보 -->
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:layout_marginTop="10dp">
-
-            <!-- 조회수 -->
+            <!-- 제목 + 카테고리 + 하트 -->
             <LinearLayout
                 android:orientation="horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical">
-
-                <ImageView
-                    android:layout_width="14dp"
-                    android:layout_height="14dp"
-                    android:src="@drawable/ic_eye" />
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/tvViewCount"
+                    android:id="@+id/tvTitle"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="수어 단어 제목"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#222222"/>
+
+                <TextView
+                    android:id="@+id/tvCategory"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="260회"
-                    android:textSize="12sp"
-                    android:textColor="#777777"
-                    android:layout_marginStart="4dp"/>
+                    android:text="카테고리"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="4dp"
+                    android:textSize="11sp"
+                    android:textColor="#4F6DF5"
+                    android:background="@drawable/count_chip_bg"/>
+
+                <ImageView
+                    android:id="@+id/btnFavorite"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_marginStart="10dp"
+                    android:src="@drawable/ic_heart_empty" />
             </LinearLayout>
 
-            <!-- 상세보기 -->
+            <!-- 설명 -->
             <TextView
-                android:id="@+id/tvDetail"
-                android:layout_width="wrap_content"
+                android:id="@+id/tvDescription"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="상세보기 >"
-                android:textSize="12sp"
-                android:textColor="#4F6DF5"
-                android:layout_marginStart="270dp"/>
+                android:layout_marginTop="6dp"
+                android:text="설명 텍스트..."
+                android:textSize="13sp"
+                android:textColor="#555555"/>
+
+            <!-- 조회수 + 상세보기 -->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginTop="10dp">
+
+                <!-- 조회수 -->
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:src="@drawable/ic_eye" />
+
+                    <TextView
+                        android:id="@+id/tvViewCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="260회"
+                        android:textSize="12sp"
+                        android:textColor="#777777"
+                        android:layout_marginStart="4dp"/>
+                </LinearLayout>
+
+                <!-- 오른쪽 정렬된 상세보기 버튼 -->
+                <TextView
+                    android:id="@+id/tvDetail"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:layout_height="wrap_content"
+                    android:text="상세보기 >"
+                    android:textSize="12sp"
+                    android:textColor="#4F6DF5"/>
+            </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>

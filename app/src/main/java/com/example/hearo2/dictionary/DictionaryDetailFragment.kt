@@ -6,14 +6,26 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.example.hearo2.R
 import com.example.hearo2.databinding.FragmentDictionaryDetailBinding
+import com.example.hearo2.dictionary.repository.SignRepository
+import com.example.hearo2.dictionary.viewmodel.DictionaryDetailViewModel
+import com.example.hearo2.dictionary.viewmodel.DictionaryDetailViewModelFactory
+import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.MediaItem
 
 class DictionaryDetailFragment : Fragment() {
 
     private lateinit var binding: FragmentDictionaryDetailBinding
+    private lateinit var viewModel: DictionaryDetailViewModel
+
+    private var player: ExoPlayer? = null
     private var isFavorite = false
+    private var currentVideoUrl: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,81 +38,91 @@ class DictionaryDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        loadData()
+        val repository = SignRepository(requireContext())
+        val factory = DictionaryDetailViewModelFactory(repository)
+        viewModel = ViewModelProvider(this, factory)[DictionaryDetailViewModel::class.java]
+
+        val id = arguments?.getInt("id") ?: return
+
+        observeViewModel()
+        viewModel.loadDetail(id)
         initListeners()
     }
 
-    private fun loadData() {
-        val title = arguments?.getString("title") ?: ""
-        val desc = arguments?.getString("description") ?: ""
-        val category = arguments?.getString("category") ?: ""
-        val views = arguments?.getInt("views") ?: 0
-        val imageRes = arguments?.getInt("imageRes") ?: R.drawable.sample_reference
+    private fun observeViewModel() {
+        viewModel.detail.observe(viewLifecycleOwner) { data ->
 
-        binding.tvWord.text = title
-        binding.tvDescription.text = desc
-        binding.tvTag.text = category
-        binding.tvViews.text = "조회수: ${views}회"
+            binding.tvWord.text = data.title
+            binding.tvDescription.text = data.signDescription
+            binding.tvTag.text = data.categoryType ?: "수어"
+            binding.tvViews.text = "조회수: ${data.viewCount ?: 0}회"
+            binding.tvCategory.text = "카테고리: ${data.categoryType ?: "정보 없음"}"
 
-        // 카드 내 이미지/영상 썸네일에 동일 이미지 사용
-        binding.imgReference.setImageResource(imageRes)
-        binding.imgVideoThumbnail.setImageResource(imageRes)
+            Glide.with(this)
+                .load(data.thumbnailUrl)
+                .placeholder(R.drawable.sample_reference)
+                .into(binding.imgVideoThumbnail)
+
+            data.images?.firstOrNull()?.let {
+                Glide.with(this)
+                    .load(it)
+                    .placeholder(R.drawable.sample_reference)
+                    .into(binding.imgReference)
+            }
+
+            currentVideoUrl = data.videoUrl
+        }
+
+        viewModel.error.observe(viewLifecycleOwner) {
+            Toast.makeText(requireContext(), "오류: $it", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun initListeners() {
-
-        // 뒤로가기
         binding.btnBack.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
-        // 즐겨찾기 토글 (상세 화면에서만 UI용)
         binding.btnFavorite.setOnClickListener {
             isFavorite = !isFavorite
             updateFavoriteIcon()
         }
 
-        // 영상 다시보기 (현재는 간단한 UI용 – 나중에 ExoPlayer 연결)
-        binding.btnReplay.setOnClickListener {
-            // TODO: ExoPlayer 연결 (지금은 UI만)
-        }
+        binding.imgVideoThumbnail.setOnClickListener { startVideo() }
+        binding.btnReplay.setOnClickListener { startVideo() }
 
-        // 한국 수어 사전 사이트 열기
         binding.btnOpenDictionary.setOnClickListener {
-            val url = "https://sldict.korean.go.kr/"   // 한국수어사전
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-            startActivity(intent)
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://sldict.korean.go.kr/")))
+        }
+    }
+
+    private fun startVideo() {
+        val url = currentVideoUrl ?: return
+
+        binding.imgVideoThumbnail.visibility = View.GONE
+        binding.playerView.visibility = View.VISIBLE
+
+        player = ExoPlayer.Builder(requireContext()).build().also { exoPlayer ->
+            binding.playerView.player = exoPlayer
+            exoPlayer.setMediaItem(MediaItem.fromUri(url))
+            exoPlayer.prepare()
+            exoPlayer.play()
         }
     }
 
     private fun updateFavoriteIcon() {
-        val icon = if (isFavorite) {
-            R.drawable.ic_heart_filled
-        } else {
-            R.drawable.ic_heart_empty
-        }
+        val icon = if (isFavorite) R.drawable.ic_heart_filled else R.drawable.ic_heart_empty
         binding.btnFavorite.setImageResource(icon)
     }
 
-    companion object {
-        fun newInstance(
-            title: String,
-            description: String,
-            category: String,
-            views: Int,
-            imageRes: Int
-        ): DictionaryDetailFragment {
+    override fun onStop() {
+        super.onStop()
+        player?.pause()
+    }
 
-            val fragment = DictionaryDetailFragment()
-            val bundle = Bundle().apply {
-                putString("title", title)
-                putString("description", description)
-                putString("category", category)
-                putInt("views", views)
-                putInt("imageRes", imageRes)
-            }
-            fragment.arguments = bundle
-            return fragment
-        }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        player?.release()
+        player = null
     }
 }

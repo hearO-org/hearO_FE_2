@@ -244,14 +244,22 @@
                     android:textStyle="bold"
                     android:textColor="#333" />
 
+                <!-- 영상 PlayerView -->
+                <com.google.android.exoplayer2.ui.PlayerView
+                    android:id="@+id/playerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="12dp"
+                    android:visibility="gone" />
+
+                <!-- 재생 전 썸네일 -->
                 <ImageView
                     android:id="@+id/imgVideoThumbnail"
                     android:layout_width="match_parent"
-                    android:layout_height="180dp"
+                    android:layout_height="200dp"
                     android:layout_marginTop="12dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/sample_reference"
-                    android:background="@drawable/card_bg" />
+                    android:src="@drawable/sample_reference" />
 
                 <TextView
                     android:id="@+id/btnReplay"
