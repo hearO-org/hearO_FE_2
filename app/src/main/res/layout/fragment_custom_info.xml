@@ -187,24 +187,20 @@
                     android:text="전체"/>
 
                 <TextView
-                    android:id="@+id/tabRegular"
+                    android:id="@+id/tabContract"
                     style="@style/JobTab"
-                    android:text="정규직"/>
+                    android:text="계약직" />
 
                 <TextView
-                    android:id="@+id/tabOffice"
+                    android:id="@+id/tabPermanent"
                     style="@style/JobTab"
-                    android:text="사무직"/>
+                    android:text="상용직" />
 
                 <TextView
-                    android:id="@+id/tabService"
+                    android:id="@+id/tabPartTime"
                     style="@style/JobTab"
-                    android:text="서비스직"/>
+                    android:text="시간제" />
 
-                <TextView
-                    android:id="@+id/tabFactory"
-                    style="@style/JobTab"
-                    android:text="생산직"/>
 
 
             </LinearLayout>

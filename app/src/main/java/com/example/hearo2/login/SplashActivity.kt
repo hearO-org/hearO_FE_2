@@ -7,7 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import com.example.hearo2.MainActivity
 import com.example.hearo2.auth.AuthPrefs
-import com.example.hearo2.signup.SignUpProfileActivity
+import com.example.hearo2.signup.SignUpInfoActivity
 
 class SplashActivity : AppCompatActivity() {
 
@@ -21,24 +21,33 @@ class SplashActivity : AppCompatActivity() {
 
     private fun navigate() {
 
-        val token = AuthPrefs.getToken(this)
+        val access = AuthPrefs.getToken(this)
+        val refresh = AuthPrefs.getRefresh(this)
+        val loggedIn = AuthPrefs.isLoggedIn(this)
         val onboarded = AuthPrefs.isOnboarded(this)
 
-        when {
-            token.isNullOrEmpty() -> {
-                // 로그인 한 적 없음
-                startActivity(Intent(this, LoginActivity::class.java))
-            }
-            !onboarded -> {
-                // 로그인했지만 온보딩 미완료
-                startActivity(Intent(this, SignUpProfileActivity::class.java))
-            }
-            else -> {
-                // 로그인 + 온보딩 완료
-                startActivity(Intent(this, MainActivity::class.java))
-            }
+        // ================================================
+        // 1️⃣ 로그인 정보 없음 → LoginActivity 이동
+        // ================================================
+        if (access.isNullOrEmpty() || refresh.isNullOrEmpty() || !loggedIn) {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+            return
         }
 
+        // ================================================
+        // 2️⃣ 로그인은 했지만 온보딩 미완료 → 온보딩 시작
+        // ================================================
+        if (!onboarded) {
+            startActivity(Intent(this, SignUpInfoActivity::class.java))
+            finish()
+            return
+        }
+
+        // ================================================
+        // 3️⃣ 로그인 + 온보딩 완료 → MainActivity 이동
+        // ================================================
+        startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
 }

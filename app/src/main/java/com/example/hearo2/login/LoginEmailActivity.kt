@@ -62,8 +62,14 @@ class LoginEmailActivity : AppCompatActivity() {
                 // ⭐ 온보딩 여부: 앱 내부 저장을 기준으로만 판단
                 val alreadyOnboarded = AuthPrefs.isOnboarded(this@LoginEmailActivity)
 
-                AuthPrefs.saveToken(this@LoginEmailActivity, body.access, null)
-                AuthPrefs.saveLoggedIn(this@LoginEmailActivity)   // ← 추가!!!
+                // ⭐ Access + Refresh 둘 다 저장하는 올바른 코드!!
+                AuthPrefs.saveToken(
+                    this@LoginEmailActivity,
+                    body.access,
+                    body.refresh
+                )
+
+                AuthPrefs.saveLoggedIn(this@LoginEmailActivity)
 
                 if (!alreadyOnboarded) {
                     startActivity(Intent(this@LoginEmailActivity, SignUpProfileActivity::class.java))
@@ -80,7 +86,6 @@ class LoginEmailActivity : AppCompatActivity() {
         })
     }
 
-
     private fun saveToken(token: String) {
         AuthPrefs.saveToken(this, token, null)
     }
@@ -88,4 +93,3 @@ class LoginEmailActivity : AppCompatActivity() {
     private fun toast(msg: String) =
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
 }
-
