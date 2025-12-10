@@ -2,9 +2,21 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- 📌 인터넷 (이미 있음) -->
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- 📌 마이크 권한(필수) -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <!-- 📌 ForegroundService 관련 권한 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+
+    <!-- ⚠️ Android 13(API 33)+ 은 POST_NOTIFICATIONS 권한도 필요할 수 있음 -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <application
+        android:name=".AppGlobals"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -56,9 +68,14 @@
         <activity android:name=".signup.SignUpKeywordActivity" android:exported="true" />
         <activity android:name=".signup.SignUpCompleteActivity" android:exported="true" />
 
-
         <!-- 메인화면 -->
         <activity android:name=".MainActivity" android:exported="true" />
+
+        <!-- ⭐⭐⭐ 소리 감지 ForegroundService 등록(가장 중요) -->
+        <service
+            android:name=".sound.SoundDetectionService"
+            android:exported="false"
+            android:foregroundServiceType="microphone" />
 
     </application>
 

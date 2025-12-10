@@ -1,25 +1,30 @@
 package com.example.hearo2.home
 
 import android.Manifest
+import android.content.*
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hearo2.R
 import com.example.hearo2.databinding.FragmentHomeBinding
+import com.example.hearo2.sound.SoundDetectionService
+import com.example.hearo2.sound.SoundRepository
+import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var adapter: RecentSoundAdapter
+    private var soundReceiver: BroadcastReceiver? = null
 
     private var isListening = false
-    private var emergencyMode = false
     private var sensitivityValue = 50
 
     override fun onCreateView(
@@ -36,138 +41,164 @@ class HomeFragment : Fragment() {
         checkMicPermission()
         initRecentList()
         initMicButton()
-        initEmergencyMode()
         initSensitivity()
+
+        // ✅ ⭐⭐⭐ 이게 없어서 안 떴던 거임
+        loadSoundHistory()
     }
 
-    // ------------------------
-    // 마이크 권한
-    // ------------------------
-    private fun checkMicPermission() {
-        val permission = Manifest.permission.RECORD_AUDIO
-        if (ContextCompat.checkSelfPermission(requireContext(), permission)
-            != PackageManager.PERMISSION_GRANTED) {
+    override fun onStart() {
+        super.onStart()
+        registerBroadcastReceiver()
+    }
 
-            ActivityCompat.requestPermissions(
-                requireActivity(),
-                arrayOf(permission),
-                1001
-            )
+    override fun onStop() {
+        super.onStop()
+        soundReceiver?.let {
+            requireActivity().unregisterReceiver(it)
+        }
+        soundReceiver = null
+    }
+
+    /* ---------------------------------- */
+
+    private fun loadSoundHistory() {
+        lifecycleScope.launch {
+            val history = SoundRepository.getMySoundHistory()
+
+            history.forEach { item ->
+
+                // ✅ null 방어
+                val label = item.label ?: "unknown"
+
+                val icon = when (label) {
+                    "car_horn" -> R.drawable.ic_car
+                    "fire_alarm", "siren" -> R.drawable.ic_fire
+                    "baby_crying" -> R.drawable.ic_baby
+                    else -> R.drawable.ic_mic_idle
+                }
+
+                val time = item.detectedAt
+                    ?.substringAfter("T")
+                    ?.substring(0, 8)
+                    ?: "--:--:--"
+
+                adapter.addItem(
+                    RecentSoundData(
+                        title = label,
+                        accuracy = "정확도 ${(item.confidence * 100).toInt()}%",
+                        time = time,
+                        iconRes = icon,
+                        tag = if (item.alert) "긴급" else null
+                    )
+                )
+            }
         }
     }
 
-    // ------------------------
-    // 최근 인식 목록
-    // ------------------------
+
     private fun initRecentList() {
-        val sample = mutableListOf(
-            RecentSoundData("화재 경보", "정확도 95%", "방금 전", R.drawable.ic_fire, "긴급"),
-            RecentSoundData("자동차 경적", "정확도 87%", "2분 전", R.drawable.ic_car),
-            RecentSoundData("아기 울음소리", "정확도 92%", "5분 전", R.drawable.ic_baby)
-        )
-
-        adapter = RecentSoundAdapter(sample)
-
+        adapter = RecentSoundAdapter(mutableListOf())
         binding.rvRecent.layoutManager = LinearLayoutManager(requireContext())
         binding.rvRecent.adapter = adapter
     }
 
-    // 외부에서 새 인식 결과 받았을 때 추가하는 함수
-    fun addNewSoundResult(data: RecentSoundData) {
-        adapter.addItem(data)
-        binding.rvRecent.scrollToPosition(0)
+    private fun registerBroadcastReceiver() {
+        if (soundReceiver != null) return
+
+        soundReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                if (intent?.action != SoundDetectionService.ACTION_SOUND_RESULT) return
+
+                val label = intent.getStringExtra(SoundDetectionService.EXTRA_LABEL) ?: return
+                val confidence = intent.getDoubleExtra(
+                    SoundDetectionService.EXTRA_CONFIDENCE, 0.0
+                )
+                val alert = intent.getBooleanExtra(
+                    SoundDetectionService.EXTRA_ALERT, false
+                )
+
+                val now = SimpleDateFormat("HH:mm:ss", Locale.KOREA).format(Date())
+
+                val icon = when (label) {
+                    "car_horn" -> R.drawable.ic_car
+                    "fire_alarm", "siren" -> R.drawable.ic_fire
+                    "baby_crying" -> R.drawable.ic_baby
+                    else -> R.drawable.ic_mic_idle
+                }
+
+                requireActivity().runOnUiThread {
+                    adapter.addItem(
+                        RecentSoundData(
+                            title = label,
+                            accuracy = "정확도 ${(confidence * 100).toInt()}%",
+                            time = now,
+                            iconRes = icon,
+                            tag = if (alert) "긴급" else null
+                        )
+                    )
+                }
+            }
+        }
+
+        val filter = IntentFilter(SoundDetectionService.ACTION_SOUND_RESULT)
+
+        if (android.os.Build.VERSION.SDK_INT >= 33) {
+            requireActivity().registerReceiver(
+                soundReceiver,
+                filter,
+                Context.RECEIVER_NOT_EXPORTED
+            )
+        } else {
+            @Suppress("UnspecifiedRegisterReceiverFlag")
+            requireActivity().registerReceiver(soundReceiver, filter)
+        }
     }
 
+    /* --------- 마이크 --------- */
 
-    // ------------------------
-    // 마이크 버튼
-    // ------------------------
     private fun initMicButton() {
         binding.btnMic.setOnClickListener {
             isListening = !isListening
 
             if (isListening) {
-                activateMic()
+                ContextCompat.startForegroundService(
+                    requireContext(),
+                    Intent(requireContext(), SoundDetectionService::class.java)
+                )
+                binding.tvMicState.text = "소리를 분석하고 있어요"
             } else {
-                resetMic()
+                requireContext().stopService(
+                    Intent(requireContext(), SoundDetectionService::class.java)
+                )
+                binding.tvMicState.text = "소리 인식 준비 완료"
             }
         }
     }
 
-    private fun activateMic() {
-        binding.btnMic.setImageResource(R.drawable.ic_mic_idle)
-        binding.tvMicState.text = "소리를 분석하고 있어요\nAI가 주변 소리를 실시간으로 인식합니다."
-
-        binding.progressSection.visibility = View.VISIBLE
-        startMicAnimation()
-
-        // Progress 예시값 (추후 실제 분석값으로 변경 가능)
-        binding.progressAnalyze.progress = 14
-        binding.progressAccuracy.progress = 45
-        binding.tvAnalyzePercent.text = "분석률 14%"
-        binding.tvAccuracyPercent.text = "정확도 45%"
-    }
-
-    private fun resetMic() {
-        binding.btnMic.setImageResource(R.drawable.ic_mic_idle)
-        binding.tvMicState.text = "소리 인식 준비 완료\n버튼을 눌러 주변 소리를 분석해보세요"
-
-        binding.progressSection.visibility = View.GONE
-
-        binding.btnMic.animate().cancel()
-        binding.btnMic.scaleX = 1f
-        binding.btnMic.scaleY = 1f
-    }
-
-
-    // ------------------------
-    // 마이크 애니메이션
-    // ------------------------
-    private fun startMicAnimation() {
-        binding.btnMic.animate()
-            .scaleX(1.15f)
-            .scaleY(1.15f)
-            .setDuration(500)
-            .withEndAction {
-                binding.btnMic.animate()
-                    .scaleX(1f)
-                    .scaleY(1f)
-                    .setDuration(500)
-                    .withEndAction { if (isListening) startMicAnimation() }
-                    .start()
-            }
-            .start()
-    }
-
-
-    // ------------------------
-    // 긴급모드
-    // ------------------------
-    private fun initEmergencyMode() {
-        binding.btnEmergency.setOnClickListener {
-            emergencyMode = !emergencyMode
-
-            if (emergencyMode) {
-                binding.btnEmergency.setBackgroundResource(R.drawable.chip_bg)
-            } else {
-                binding.btnEmergency.setBackgroundResource(R.drawable.chip_bg)
-            }
-        }
-    }
-
-
-    // ------------------------
-    // 감도조절 BottomSheet
-    // ------------------------
     private fun initSensitivity() {
         binding.btnSensitivity.setOnClickListener {
             SensitivityBottomSheet(
                 defaultValue = sensitivityValue,
-                onSave = { newValue ->
-                    sensitivityValue = newValue
-                    binding.btnSensitivity.text = "감도 ${newValue}%"
+                onSave = {
+                    sensitivityValue = it
+                    binding.btnSensitivity.text = "감도 ${it}%"
                 }
             ).show(parentFragmentManager, "SensitivityBottomSheet")
+        }
+    }
+
+    private fun checkMicPermission() {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.RECORD_AUDIO
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.RECORD_AUDIO),
+                1001
+            )
         }
     }
 }

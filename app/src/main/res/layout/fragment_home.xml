@@ -1,259 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/hearo_bg">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <!-- ================= 헤더 ================= -->
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="80dp"
+        android:padding="20dp"
+        android:background="@drawable/home_header_bg">
 
-        <!-- ===============================
-             ① 보라 헤더 (프로필 + 알림)
-        =============================== -->
-        <RelativeLayout
-            android:id="@+id/topHeader"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:padding="20dp"
-            android:background="@drawable/home_header_bg">
-
-            <!-- 프로필 -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-                <ImageView
-                    android:id="@+id/imgProfile"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/ic_profile_placeholder"
-                    android:background="@drawable/profile_circle"
-                    android:scaleType="centerCrop"/>
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp">
-
-                    <TextView
-                        android:id="@+id/tvUserName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="hearO"
-                        android:textColor="@android:color/white"
-                        android:textSize="16sp"
-                        android:textStyle="bold"/>
-                </LinearLayout>
-            </LinearLayout>
-
-            <!-- 알림 -->
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true">
-
-                <ImageView
-                    android:id="@+id/btnAlarm"
-                    android:layout_width="26dp"
-                    android:layout_height="26dp"
-                    android:src="@drawable/ic_alarm" />
-
-                <TextView
-                    android:id="@+id/tvAlarmBadge"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:layout_gravity="top|end"
-                    android:background="@drawable/badge_circle_red"
-                    android:text="3"
-                    android:gravity="center"
-                    android:textColor="@android:color/white"
-                    android:textSize="10sp"/>
-            </FrameLayout>
-        </RelativeLayout>
-
-
-        <!-- ===============================
-             ② 소리 인식 설명 영역
-        =============================== -->
         <LinearLayout
-            android:id="@+id/soundHeader"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@android:color/white"
-            android:padding="20dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="소리 인식"
-                android:textColor="#222"
-                android:textStyle="bold"
-                android:textSize="20sp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="AI 기반 실시간 소리 분석\n주변 소리를 인식하고 즉시 시각적으로 알려드려요"
-                android:layout_marginTop="6dp"
-                android:textColor="#666"
-                android:textSize="13sp"/>
-        </LinearLayout>
-
-
-        <!-- ===============================
-             ③ 소리 인식 카드
-        =============================== -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/card_bg"
-            android:padding="20dp"
-            android:layout_margin="20dp">
-
-            <!-- 마이크 버튼 -->
-            <ImageView
-                android:id="@+id/btnMic"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_mic_idle"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvMicState"
-                android:text="소리 인식 준비 완료\n버튼을 눌러 주변 소리를 분석해보세요"
-                android:textSize="12sp"
-                android:textColor="#444"
-                android:gravity="center"
-                android:layout_marginTop="12dp"/>
-
-
-            <!-- NEW!!!! 분석률/정확도 ProgressBar 영역 -->
-            <LinearLayout
-                android:id="@+id/progressSection"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone"
-                android:layout_marginTop="10dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tvAnalyzePercent"
-                    android:text="분석률 0%"
-                    android:textColor="#444"/>
-
-                <ProgressBar
-                    android:id="@+id/progressAnalyze"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="6dp"
-                    android:progress="0"
-                    android:max="100"
-                    android:progressDrawable="@drawable/progress_bar_purple"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tvAccuracyPercent"
-                    android:text="정확도 0%"
-                    android:layout_marginTop="8dp"
-                    android:textColor="#444"/>
-
-                <ProgressBar
-                    android:id="@+id/progressAccuracy"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="6dp"
-                    android:progress="0"
-                    android:max="100"
-                    android:progressDrawable="@drawable/progress_bar_blue"/>
-            </LinearLayout>
-
-
-            <!-- 긴급모드/감도 -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:layout_marginTop="16dp">
-
-                <TextView
-                    android:id="@+id/btnEmergency"
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/chip_bg"
-                    android:gravity="center"
-                    android:text="긴급모드"
-                    android:textColor="#FF7A42"
-                    android:textStyle="bold"
-                    android:textSize="13sp"
-                    android:layout_marginEnd="6dp"/>
-
-                <TextView
-                    android:id="@+id/btnSensitivity"
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/chip_bg"
-                    android:gravity="center"
-                    android:text="감도조절"
-                    android:textColor="#4F6DF5"
-                    android:textStyle="bold"
-                    android:textSize="13sp"
-                    android:layout_marginStart="6dp"/>
-            </LinearLayout>
-        </LinearLayout>
-
-
-        <!-- ===============================
-             ④ 최근 인식 결과
-        =============================== -->
-        <LinearLayout
             android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
             android:gravity="center_vertical">
 
-            <TextView
-                android:text="최근 인식 결과"
-                android:textStyle="bold"
-                android:textSize="15sp"
-                android:textColor="#333"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_profile_placeholder"
+                android:background="@drawable/profile_circle"/>
 
             <TextView
-                android:id="@+id/tvRecentCount"
                 android:layout_width="wrap_content"
-                android:layout_height="28dp"
-                android:padding="6dp"
-                android:background="@drawable/count_chip_bg"
-                android:text="3개 항목"
-                android:textSize="10sp"
-                android:textColor="#666"
-                android:gravity="center"/>
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="hearO"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"/>
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvRecent"
+        <ImageView
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_alarm"/>
+    </RelativeLayout>
+
+    <!-- ================= 설명 ================= -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:padding="20dp"
+        android:orientation="vertical">
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"/>
+            android:text="소리 인식"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="AI 기반 실시간 소리 분석\n주변 소리를 인식하고 알려드려요"
+            android:textSize="13sp"/>
     </LinearLayout>
-</ScrollView>
+
+    <!-- ================= 소리 인식 카드 ================= -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:padding="20dp"
+        android:background="@drawable/card_bg"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/btnMic"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_mic_idle"/>
+
+        <TextView
+            android:id="@+id/tvMicState"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:text="소리 인식 준비 완료"/>
+
+        <!-- Progress -->
+        <LinearLayout
+            android:id="@+id/progressSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tvAnalyzePercent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <ProgressBar
+                android:id="@+id/progressAnalyze"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="6dp"
+                android:max="100"/>
+
+            <TextView
+                android:id="@+id/tvAccuracyPercent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"/>
+
+            <ProgressBar
+                android:id="@+id/progressAccuracy"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="6dp"
+                android:max="100"/>
+        </LinearLayout>
+
+        <!-- 감도조절 -->
+        <TextView
+            android:id="@+id/btnSensitivity"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/chip_bg"
+            android:gravity="center"
+            android:text="감도조절"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+    <!-- ================= 최근 결과 ================= -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:text="최근 인식 결과"
+        android:textStyle="bold"/>
+
+    <!-- ✅ 핵심 수정 포인트 -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvRecent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"/>
+</LinearLayout>
