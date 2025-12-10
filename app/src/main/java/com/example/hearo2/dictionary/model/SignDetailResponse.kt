@@ -15,5 +15,6 @@ data class SignDetailData(
     val categoryType: String?,
     val viewCount: Int?,
     val createdAt: String?,
-    val modifiedAt: String?
+    val modifiedAt: String?,
+    var favorite: Boolean? = false
 )

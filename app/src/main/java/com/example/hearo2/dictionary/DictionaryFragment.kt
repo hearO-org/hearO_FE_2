@@ -50,13 +50,20 @@ class DictionaryFragment : Fragment() {
         setupCategoryButtons()
     }
 
+
+    // 🔥🔥 수정된 부분: Adapter 에 viewModel 전달 추가
     private fun setupRecycler() {
-        adapter = DictionaryAdapter(mutableListOf()) { item ->
+        adapter = DictionaryAdapter(
+            mutableListOf(),
+            viewModel,              // ⭐ 추가됨! (즐겨찾기 서버 반영 위해 필요)
+        ) { item ->
             openDetail(item)
         }
+
         binding.rvDictionary.layoutManager = LinearLayoutManager(requireContext())
         binding.rvDictionary.adapter = adapter
     }
+
 
     private fun observeViewModel() {
         viewModel.signList.observe(viewLifecycleOwner) { list ->
@@ -67,6 +74,7 @@ class DictionaryFragment : Fragment() {
             Toast.makeText(requireContext(), "오류 발생: $it", Toast.LENGTH_SHORT).show()
         }
     }
+
 
     private fun setupCategoryButtons() {
 
@@ -111,6 +119,7 @@ class DictionaryFragment : Fragment() {
         adapter.updateList(filtered)
     }
 
+
     private fun setupSearch() {
         binding.etSearch.setOnEditorActionListener { _, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH ||
@@ -123,6 +132,7 @@ class DictionaryFragment : Fragment() {
             } else false
         }
     }
+
 
     private fun openDetail(item: SignItem) {
         val action = DictionaryFragmentDirections

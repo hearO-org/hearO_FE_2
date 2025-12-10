@@ -7,9 +7,11 @@ import com.bumptech.glide.Glide
 import com.example.hearo2.R
 import com.example.hearo2.databinding.ItemDictionaryBinding
 import com.example.hearo2.dictionary.model.SignItem
+import com.example.hearo2.dictionary.viewmodel.DictionaryViewModel
 
 class DictionaryAdapter(
     private val items: MutableList<SignItem>,
+    private val viewModel: DictionaryViewModel,   // ⭐ 추가: ViewModel 전달
     private val onItemClick: (SignItem) -> Unit
 ) : RecyclerView.Adapter<DictionaryAdapter.ViewHolder>() {
 
@@ -32,33 +34,27 @@ class DictionaryAdapter(
             // 조회수
             binding.tvViewCount.text = "${item.viewCount ?: 0}회"
 
-            // 썸네일 이미지 Glide 적용
+            // 썸네일 Glide
             Glide.with(binding.root)
                 .load(item.thumbnailUrl)
                 .placeholder(R.drawable.sample_reference)
                 .error(R.drawable.sample_reference)
                 .into(binding.imgThumbnail)
 
-            // 즐겨찾기 (현재 API 구조에 favorite 있음)
-            val heartIcon = if (item.favorite == true) {
+            // 즐겨찾기 아이콘
+            val icon = if (item.favorite == true)
                 R.drawable.ic_heart_filled
-            } else {
+            else
                 R.drawable.ic_heart_empty
-            }
-            binding.btnFavorite.setImageResource(heartIcon)
 
-            // 즐겨찾기 애니메이션 + UI만 변경 (서버 반영 없음)
+            binding.btnFavorite.setImageResource(icon)
+
+            // 즐겨찾기 클릭 → ViewModel 에 요청
             binding.btnFavorite.setOnClickListener {
-                val nowFav = !(item.favorite ?: false)
-                item.favorite = nowFav
+                // 서버로 즐겨찾기 추가/삭제 요청
+                viewModel.toggleFavoriteFromList(item)
 
-                val newIcon = if (nowFav) {
-                    R.drawable.ic_heart_filled
-                } else {
-                    R.drawable.ic_heart_empty
-                }
-                binding.btnFavorite.setImageResource(newIcon)
-
+                // 클릭 애니메이션(UI만)
                 binding.btnFavorite.animate()
                     .scaleX(1.2f)
                     .scaleY(1.2f)
@@ -73,8 +69,6 @@ class DictionaryAdapter(
                             .start()
                     }
                     .start()
-
-                notifyItemChanged(adapterPosition)
             }
 
             // 상세보기 이동

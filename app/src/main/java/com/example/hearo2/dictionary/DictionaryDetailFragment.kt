@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.hearo2.R
@@ -15,6 +16,8 @@ import com.example.hearo2.databinding.FragmentDictionaryDetailBinding
 import com.example.hearo2.dictionary.repository.SignRepository
 import com.example.hearo2.dictionary.viewmodel.DictionaryDetailViewModel
 import com.example.hearo2.dictionary.viewmodel.DictionaryDetailViewModelFactory
+import com.example.hearo2.dictionary.viewmodel.DictionaryViewModel
+import com.example.hearo2.dictionary.viewmodel.DictionaryViewModelFactory
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 
@@ -23,8 +26,14 @@ class DictionaryDetailFragment : Fragment() {
     private lateinit var binding: FragmentDictionaryDetailBinding
     private lateinit var viewModel: DictionaryDetailViewModel
 
+    // ⭐ 목록 ViewModel 공유
+    private val listViewModel: DictionaryViewModel by activityViewModels {
+        DictionaryViewModelFactory(requireContext())
+    }
+
     private var player: ExoPlayer? = null
     private var isFavorite = false
+    private var signId: Int = -1
     private var currentVideoUrl: String? = null
 
     override fun onCreateView(
@@ -38,14 +47,15 @@ class DictionaryDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        signId = arguments?.getInt("id") ?: return
+
         val repository = SignRepository(requireContext())
         val factory = DictionaryDetailViewModelFactory(repository)
         viewModel = ViewModelProvider(this, factory)[DictionaryDetailViewModel::class.java]
 
-        val id = arguments?.getInt("id") ?: return
-
         observeViewModel()
-        viewModel.loadDetail(id)
+        viewModel.loadDetail(signId)
+
         initListeners()
     }
 
@@ -57,6 +67,9 @@ class DictionaryDetailFragment : Fragment() {
             binding.tvTag.text = data.categoryType ?: "수어"
             binding.tvViews.text = "조회수: ${data.viewCount ?: 0}회"
             binding.tvCategory.text = "카테고리: ${data.categoryType ?: "정보 없음"}"
+
+            isFavorite = data.favorite == true
+            updateFavoriteIcon()
 
             Glide.with(this)
                 .load(data.thumbnailUrl)
@@ -78,14 +91,25 @@ class DictionaryDetailFragment : Fragment() {
         }
     }
 
+
     private fun initListeners() {
+
         binding.btnBack.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
         binding.btnFavorite.setOnClickListener {
-            isFavorite = !isFavorite
-            updateFavoriteIcon()
+            val newState = !isFavorite
+
+            viewModel.toggleFavorite(signId, newState) { success ->
+                if (success) {
+                    isFavorite = newState
+                    updateFavoriteIcon()
+
+                    // ⭐ 목록에도 동기화
+                    listViewModel.updateFavoriteStateFromDetail(signId, isFavorite)
+                }
+            }
         }
 
         binding.imgVideoThumbnail.setOnClickListener { startVideo() }
@@ -95,6 +119,7 @@ class DictionaryDetailFragment : Fragment() {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://sldict.korean.go.kr/")))
         }
     }
+
 
     private fun startVideo() {
         val url = currentVideoUrl ?: return
@@ -110,10 +135,12 @@ class DictionaryDetailFragment : Fragment() {
         }
     }
 
+
     private fun updateFavoriteIcon() {
         val icon = if (isFavorite) R.drawable.ic_heart_filled else R.drawable.ic_heart_empty
         binding.btnFavorite.setImageResource(icon)
     }
+
 
     override fun onStop() {
         super.onStop()
