@@ -57,6 +57,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <ImageView
+                android:id="@+id/btnBack"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_back"
+                android:padding="4dp"
+                android:layout_gravity="start"
+                android:contentDescription="back button" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -251,7 +260,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="18dp"
-                    app:cardElevation="2dp">
+                    app:cardElevation="2dp"
+                    android:layout_marginBottom="16dp">
 
                     <LinearLayout
                         android:orientation="vertical"
@@ -267,43 +277,144 @@
                             android:textColor="#333"
                             android:textSize="15sp" />
 
-                        <!-- 태그 입력 -->
+                        <!-- 🔥 온보딩 키워드 그대로 적용 -->
                         <LinearLayout
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical"
-                            android:layout_marginTop="10dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <EditText
-                                android:id="@+id/etAddTag"
-                                android:hint="관심 분야 추가"
-                                android:layout_width="0dp"
-                                android:layout_weight="1"
-                                android:layout_height="45dp"
-                                android:padding="12dp"
-                                android:background="@drawable/search_box_bg" />
-
-                            <TextView
-                                android:id="@+id/btnAddTag"
-                                android:text="+"
-                                android:textColor="@color/purple_500"
-                                android:textSize="24sp"
-                                android:layout_width="45dp"
-                                android:layout_height="45dp"
-                                android:gravity="center" />
-                        </LinearLayout>
-
-                        <!-- 태그 목록 -->
-                        <com.google.android.material.chip.ChipGroup
-                            android:id="@+id/tagGroup"
+                            android:orientation="vertical"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            app:chipSpacing="8dp" />
+                            android:layout_marginTop="12dp">
+
+                            <!-- 1줄 -->
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/keyword1"
+                                    android:layout_width="0dp"
+                                    android:layout_height="48dp"
+                                    android:layout_weight="1"
+                                    android:text="취업"
+                                    android:gravity="center"
+                                    android:background="@drawable/keyword_unselected"
+                                    android:textColor="#888888"
+                                    android:layout_marginEnd="8dp" />
+
+                                <TextView
+                                    android:id="@+id/keyword2"
+                                    android:layout_width="0dp"
+                                    android:layout_height="48dp"
+                                    android:layout_weight="1"
+                                    android:text="복지"
+                                    android:gravity="center"
+                                    android:background="@drawable/keyword_unselected"
+                                    android:textColor="#888888" />
+                            </LinearLayout>
+
+                            <!-- 2줄 -->
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp">
+
+                                <TextView
+                                    android:id="@+id/keyword3"
+                                    android:layout_width="0dp"
+                                    android:layout_height="48dp"
+                                    android:layout_weight="1"
+                                    android:text="생활정보"
+                                    android:gravity="center"
+                                    android:background="@drawable/keyword_unselected"
+                                    android:textColor="#888888"
+                                    android:layout_marginEnd="8dp" />
+
+                                <TextView
+                                    android:id="@+id/keyword4"
+                                    android:layout_width="0dp"
+                                    android:layout_height="48dp"
+                                    android:layout_weight="1"
+                                    android:text="모임·커뮤니티"
+                                    android:gravity="center"
+                                    android:background="@drawable/keyword_unselected"
+                                    android:textColor="#888888" />
+                            </LinearLayout>
+
+                            <!-- 3줄 -->
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp">
+
+                                <TextView
+                                    android:id="@+id/keyword5"
+                                    android:layout_width="0dp"
+                                    android:layout_height="48dp"
+                                    android:layout_weight="1"
+                                    android:text="교육"
+                                    android:gravity="center"
+                                    android:background="@drawable/keyword_unselected"
+                                    android:textColor="#888888"
+                                    android:layout_marginEnd="8dp" />
+
+                                <TextView
+                                    android:id="@+id/keyword6"
+                                    android:layout_width="0dp"
+                                    android:layout_height="48dp"
+                                    android:layout_weight="1"
+                                    android:text="보조공학·기술"
+                                    android:gravity="center"
+                                    android:background="@drawable/keyword_unselected"
+                                    android:textColor="#888888" />
+                            </LinearLayout>
+
+                            <!-- 4줄 -->
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp">
+
+                                <TextView
+                                    android:id="@+id/keyword7"
+                                    android:layout_width="0dp"
+                                    android:layout_height="48dp"
+                                    android:layout_weight="1"
+                                    android:text="취미·여가"
+                                    android:gravity="center"
+                                    android:background="@drawable/keyword_unselected"
+                                    android:textColor="#888888"
+                                    android:layout_marginEnd="8dp" />
+
+                                <TextView
+                                    android:id="@+id/keyword8"
+                                    android:layout_width="0dp"
+                                    android:layout_height="48dp"
+                                    android:layout_weight="1"
+                                    android:text="자막·영상콘텐츠"
+                                    android:gravity="center"
+                                    android:background="@drawable/keyword_unselected"
+                                    android:textColor="#888888" />
+                            </LinearLayout>
+
+                        </LinearLayout>
 
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
+
+                <Button
+                    android:id="@+id/btnSave"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="24dp"
+                    android:background="@color/purple_200"
+                    android:text="저장하기"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:textSize="16sp" />
 
             </LinearLayout>
 

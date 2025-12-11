@@ -45,6 +45,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp">
 
+                        <!-- 닉네임만 유지 -->
                         <TextView
                             android:id="@+id/tvUserNameTop"
                             android:layout_width="wrap_content"
@@ -54,16 +55,19 @@
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
+                        <!-- user 상태는 API에 없음 → 제거 or GONE -->
                         <TextView
                             android:id="@+id/tvUserStateTop"
+                            android:visibility="gone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="user"
+                            android:text=""
                             android:textColor="#F1F1F1"
                             android:textSize="12sp" />
                     </LinearLayout>
                 </LinearLayout>
 
+                <!-- 알림 배지 : API 없음 → 기본 GONE -->
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -77,11 +81,12 @@
 
                     <TextView
                         android:id="@+id/tvAlarmBadge"
+                        android:visibility="gone"
                         android:layout_width="18dp"
                         android:layout_height="18dp"
                         android:layout_gravity="top|end"
                         android:background="@drawable/badge_circle_red"
-                        android:text="3"
+                        android:text=""
                         android:gravity="center"
                         android:textColor="@android:color/white"
                         android:textSize="10sp" />
@@ -149,17 +154,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
+                    <!-- 닉네임 -->
                     <TextView
-                        android:id="@+id/tvUserName"
+                        android:id="@+id/tvNickname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="효비"
+                        android:text="user"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:textColor="#222" />
 
+                    <!-- 이메일 -->
                     <TextView
-                        android:id="@+id/tvUserEmail"
+                        android:id="@+id/tvEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="user@hearo.com"
@@ -178,10 +185,10 @@
 
 
         <!-- ======================================================= -->
-        <!-- ③ 내 활동 → 전체 보기만 남긴 버전 -->
+        <!-- ③ 내 활동 → 전체 보기 -->
         <!-- ======================================================= -->
         <androidx.cardview.widget.CardView
-            android:id="@+id/boxPrivacy"
+            android:id="@+id/boxMyActivity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
@@ -204,7 +211,7 @@
                     android:textColor="#333"
                     android:layout_marginBottom="10dp" />
 
-                <!-- ⭐ 전체 보기만 존재 -->
+                <!-- 여기 누르면 MyActivityFragment 로 이동 -->
                 <TextView
                     android:id="@+id/menuMyActivity"
                     android:layout_width="match_parent"

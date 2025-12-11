@@ -9,17 +9,16 @@
 
     <LinearLayout
         android:orientation="horizontal"
-        android:padding="14dp"
-        android:gravity="center_vertical"
+        android:padding="12dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!-- 썸네일 -->
         <ImageView
-            android:id="@+id/imgSignThumb"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:scaleType="centerCrop" />
+            android:id="@+id/imgThumb"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:scaleType="centerCrop"
+            android:background="#DDDDDD" />
 
         <LinearLayout
             android:orientation="vertical"
@@ -28,33 +27,23 @@
             android:layout_weight="1"
             android:layout_height="wrap_content">
 
-            <!-- 단어명 -->
             <TextView
-                android:id="@+id/tvSignTitle"
+                android:id="@+id/tvTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="사랑"
-                android:textColor="#222"
+                android:text="수어 제목"
                 android:textStyle="bold"
-                android:textSize="16sp" />
+                android:textSize="15sp"
+                android:textColor="#222" />
 
-            <!-- 카테고리 -->
             <TextView
-                android:id="@+id/tvSignCategory"
+                android:id="@+id/tvCat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="감정 표현"
+                android:text="카테고리"
+                android:textSize="12sp"
                 android:textColor="#666"
-                android:textSize="12sp" />
+                android:layout_marginTop="4dp" />
         </LinearLayout>
-
-        <!-- 좋아요 아이콘 -->
-        <ImageView
-            android:id="@+id/btnFavorite"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:src="@drawable/ic_heart_filled" />
     </LinearLayout>
-
 </androidx.cardview.widget.CardView>

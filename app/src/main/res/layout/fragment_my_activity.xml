@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- 🔹 상단 헤더 -->
+    <!-- 🔹 상단 헤더 전체 -->
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -24,10 +24,10 @@
 
             <!-- 프로필 -->
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@+id/imgProfile"
@@ -52,6 +52,7 @@
                         android:textSize="16sp"
                         android:textStyle="bold"/>
 
+                    <!-- API에 없는 정보라서 유지 원할 시 그대로 둠 -->
                     <TextView
                         android:id="@+id/tvUserState"
                         android:layout_width="wrap_content"
@@ -62,7 +63,7 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- 알림 -->
+            <!-- 알림 아이콘 -->
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -89,21 +90,29 @@
 
 
         <!-- ========================================= -->
-        <!-- ② 하얀 헤더(소리 인식 텍스트) -->
+        <!-- ② 하얀 헤더 (내 활동 타이틀) -->
         <!-- ========================================= -->
         <LinearLayout
             android:id="@+id/soundHeader"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="@android:color/white"
             android:padding="20dp"
-            android:elevation="2dp">
+            android:elevation="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/btnBack"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_back"
+                android:padding="4dp"
+                android:layout_marginEnd="12dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="소리 인식"
+                android:text="내 활동"
                 android:textColor="#222222"
                 android:textStyle="bold"
                 android:textSize="20sp"/>
@@ -112,12 +121,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
-                android:text="AI 기반 실시간 소리 분석\n주변 소리를 인식하고 즉시 시각적으로 알려드려요"
+                android:text="북마크, 좋아요, 댓글 관리"
                 android:textColor="#666666"
                 android:textSize="13sp"/>
         </LinearLayout>
 
-    <!-- 🔹 탭 버튼 -->
+    </LinearLayout> <!-- 🔥 이 줄이 빠져 있었음 → 내부 LinearLayout 닫기 -->
+
+
+    <!-- ========================================= -->
+    <!-- ③ 탭 버튼 영역 -->
+    <!-- ========================================= -->
     <LinearLayout
         android:id="@+id/tabContainer"
         android:orientation="horizontal"
@@ -128,9 +142,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!-- 게시물 북마크 -->
         <TextView
             android:id="@+id/tabBookmark"
-            android:text="북마크 3"
+            android:text="북마크"
             android:textStyle="bold"
             android:padding="10dp"
             android:background="@drawable/tab_selected_bg"
@@ -141,9 +156,10 @@
             android:gravity="center"
             android:layout_height="45dp" />
 
+        <!-- 수어 좋아요 -->
         <TextView
             android:id="@+id/tabLike"
-            android:text="좋아요 2"
+            android:text="좋아요"
             android:padding="10dp"
             android:background="@drawable/tab_unselected_bg"
             android:textColor="#666"
@@ -153,9 +169,10 @@
             android:gravity="center"
             android:layout_height="45dp" />
 
+        <!-- 내가 쓴 댓글 -->
         <TextView
             android:id="@+id/tabComment"
-            android:text="댓글 3"
+            android:text="댓글"
             android:padding="10dp"
             android:background="@drawable/tab_unselected_bg"
             android:textColor="#666"
@@ -163,14 +180,16 @@
             android:layout_weight="1"
             android:gravity="center"
             android:layout_height="45dp" />
-
     </LinearLayout>
 
-    <!-- 🔹 콘텐츠 영역 -->
+
+    <!-- ========================================= -->
+    <!-- ④ 탭 내용이 교체될 콘텐츠 영역 -->
+    <!-- ========================================= -->
     <FrameLayout
         android:id="@+id/contentContainer"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
-</LinearLayout>
+
 </LinearLayout>

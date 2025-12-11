@@ -3,6 +3,7 @@ package com.example.hearo2.mypage.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.hearo2.R
 import com.example.hearo2.databinding.ItemActivityBookmarkBinding
 import com.example.hearo2.databinding.ItemActivityCommentBinding
 import com.example.hearo2.databinding.ItemActivityLikeBinding
@@ -77,11 +78,23 @@ class MyActivityAdapter(
 
     class LikeViewHolder(private val binding: ItemActivityLikeBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
         fun bind(item: MyActivityItem) {
-            binding.tvTitle.text = item.title
-            binding.tvLikes.text = "${item.likeCount} ❤️"
+
+            // 단어명
+            binding.tvSignTitle.text = item.title
+
+            // 카테고리
+            binding.tvSignCategory.text = item.category
+
+            // 썸네일
+            binding.imgSignThumb.setImageResource(item.thumbnailRes)
+
+            // 좋아요 아이콘 (사전 좋아요니까 항상 하트 채움)
+            binding.btnFavorite.setImageResource(R.drawable.ic_heart_filled)
         }
     }
+
 
     class CommentViewHolder(private val binding: ItemActivityCommentBinding) :
         RecyclerView.ViewHolder(binding.root) {

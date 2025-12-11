@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.hearo2.R
 import com.example.hearo2.databinding.FragmentMyActivityBinding
 
@@ -27,16 +28,19 @@ class MyActivityFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        /** 👉 기본 화면: 북마크 */
+        // 🔙 뒤로가기 버튼 추가
+        binding.btnBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
+        // 기본: 북마크 탭
         showBookmark()
 
-        /** 👉 탭 클릭 이벤트 */
         binding.tabBookmark.setOnClickListener { showBookmark() }
         binding.tabLike.setOnClickListener { showLike() }
         binding.tabComment.setOnClickListener { showComment() }
     }
 
-    /** 🔹 탭 선택 UI 변경 */
     private fun selectTab(selected: TextView, others: List<TextView>) {
         selected.setBackgroundResource(R.drawable.tab_selected_bg)
         selected.setTextColor(ContextCompat.getColor(requireContext(), R.color.purple_500))
@@ -47,7 +51,6 @@ class MyActivityFragment : Fragment() {
         }
     }
 
-    /** 🔹 Fragment 전환 (Fade 애니메이션 포함) */
     private fun fadeChange(fragment: Fragment) {
         parentFragmentManager.beginTransaction()
             .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
@@ -55,19 +58,16 @@ class MyActivityFragment : Fragment() {
             .commit()
     }
 
-    /** 🔹 북마크 탭 */
     private fun showBookmark() {
         selectTab(binding.tabBookmark, listOf(binding.tabLike, binding.tabComment))
         fadeChange(BookmarkFragment())
     }
 
-    /** 🔹 좋아요 탭 */
     private fun showLike() {
         selectTab(binding.tabLike, listOf(binding.tabBookmark, binding.tabComment))
-        fadeChange(LikeFragment())
+        fadeChange(SignLikeFragment())   // ⭐ 수어 사전 좋아요 Fragment로 변경
     }
 
-    /** 🔹 댓글 탭 */
     private fun showComment() {
         selectTab(binding.tabComment, listOf(binding.tabBookmark, binding.tabLike))
         fadeChange(CommentFragment())

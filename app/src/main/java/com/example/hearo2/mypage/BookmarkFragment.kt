@@ -1,4 +1,3 @@
-//BookmarkFragment
 package com.example.hearo2.mypage
 
 import android.os.Bundle
@@ -8,8 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hearo2.databinding.FragmentBookmarkBinding
-import com.example.hearo2.mypage.adapter.PostAdapter
-import com.example.hearo2.mypage.model.Post
+import com.example.hearo2.mypage.adapter.BookmarkAdapter
+import com.example.hearo2.mypage.model.PostBookmark
 
 class BookmarkFragment : Fragment() {
 
@@ -23,31 +22,13 @@ class BookmarkFragment : Fragment() {
         _binding = FragmentBookmarkBinding.inflate(inflater, container, false)
 
         val dummy = listOf(
-            Post(
-                id = 1,
-                category = "지원 정보",
-                title = "청각장애인 고용지원 신청 마감 안내",
-                content = "지원 내용...",
-                time = "2일 전",
-                views = 23,
-                likes = 10,
-                comments = 5
-            ),
-            Post(
-                id = 2,
-                category = "교육 정보",
-                title = "수어 통역사 시험 일정 안내",
-                content = "시험 관련 정보...",
-                time = "5일 전",
-                views = 45,
-                likes = 12,
-                comments = 3
-            )
+            PostBookmark(1, "지원 정보", "청각장애인 고용지원", "2일 전", 23),
+            PostBookmark(2, "교육 정보", "수어 통역사 시험 안내", "5일 전", 45)
         )
 
         binding.recyclerBookmark.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = PostAdapter(dummy)
+            adapter = BookmarkAdapter(dummy)
         }
 
         return binding.root

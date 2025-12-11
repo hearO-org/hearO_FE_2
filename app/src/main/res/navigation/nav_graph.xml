@@ -161,6 +161,12 @@
         android:id="@+id/myActivityFragment"
         android:name="com.example.hearo2.mypage.MyActivityFragment"
         android:label="내 활동"
-        tools:layout="@layout/fragment_my_activity"/>
+        tools:layout="@layout/fragment_my_activity">
+
+        <action
+            android:id="@+id/action_myActivity_to_dictionaryDetailFragment"
+            app:destination="@id/dictionaryDetailFragment" />
+    </fragment>
+
 
 </navigation>

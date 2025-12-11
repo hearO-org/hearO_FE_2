@@ -4,36 +4,32 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hearo2.databinding.ItemActivityBookmarkBinding
-import com.example.hearo2.mypage.model.MyActivityItem
+import com.example.hearo2.mypage.model.PostBookmark
 
-class BookmarkAdapter(
-    private val items: List<MyActivityItem>
-) : RecyclerView.Adapter<BookmarkAdapter.BookmarkViewHolder>() {
+class BookmarkAdapter(private val items: List<PostBookmark>) :
+    RecyclerView.Adapter<BookmarkAdapter.ViewHolder>() {
 
-    inner class BookmarkViewHolder(
-        private val binding: ItemActivityBookmarkBinding
-    ) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(val binding: ItemActivityBookmarkBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: MyActivityItem) {
-            binding.tvTitle.text = item.title
+        fun bind(item: PostBookmark) {
             binding.tvCategory.text = item.category
-            binding.tvTime.text = item.date
-            binding.tvViews.text = "${item.viewCount} 조회"
+            binding.tvTitle.text = item.title
+            binding.tvTime.text = item.time
+            binding.tvViews.text = "${item.views} 조회"
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookmarkViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemActivityBookmarkBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
+            LayoutInflater.from(parent.context), parent, false
         )
-        return BookmarkViewHolder(binding)
+        return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: BookmarkViewHolder, position: Int) {
+    override fun getItemCount() = items.size
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(items[position])
     }
-
-    override fun getItemCount(): Int = items.size
 }

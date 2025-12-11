@@ -27,6 +27,12 @@ class HomeFragment : Fragment() {
     private var isListening = false
     private var sensitivityValue = 50
 
+    // ✅ 중복 방지용
+    private var lastLabel: String? = null
+    private var lastTime: Long = 0L
+
+    // ------------------------------------------
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,7 +49,7 @@ class HomeFragment : Fragment() {
         initMicButton()
         initSensitivity()
 
-        // ✅ ⭐⭐⭐ 이게 없어서 안 떴던 거임
+        // ✅ 서버에서 과거 기록 로드
         loadSoundHistory()
     }
 
@@ -60,49 +66,63 @@ class HomeFragment : Fragment() {
         soundReceiver = null
     }
 
-    /* ---------------------------------- */
-
+    // ==================================================
+    // ✅ 서버 히스토리
+    // ==================================================
     private fun loadSoundHistory() {
         lifecycleScope.launch {
-            val history = SoundRepository.getMySoundHistory()
+            runCatching {
+                SoundRepository.getMySoundHistory()
+            }.onSuccess { history ->
 
-            history.forEach { item ->
+                history
+                    .sortedByDescending { it.detectedAt } // ✅ 최신 먼저
+                    .forEach { item ->
 
-                // ✅ null 방어
-                val label = item.label ?: "unknown"
+                        val label = item.label ?: "unknown"
+                        val confidence = item.confidence
 
-                val icon = when (label) {
-                    "car_horn" -> R.drawable.ic_car
-                    "fire_alarm", "siren" -> R.drawable.ic_fire
-                    "baby_crying" -> R.drawable.ic_baby
-                    else -> R.drawable.ic_mic_idle
-                }
+                        val icon = when (label) {
+                            "car_horn" -> R.drawable.ic_car
+                            "fire_alarm", "siren" -> R.drawable.ic_fire
+                            "baby_crying" -> R.drawable.ic_baby
+                            else -> R.drawable.ic_mic_idle
+                        }
 
-                val time = item.detectedAt
-                    ?.substringAfter("T")
-                    ?.substring(0, 8)
-                    ?: "--:--:--"
+                        val time = item.detectedAt
+                            ?.substringAfter("T")
+                            ?.substring(0, 8)
+                            ?: "--:--:--"
 
-                adapter.addItem(
-                    RecentSoundData(
-                        title = label,
-                        accuracy = "정확도 ${(item.confidence * 100).toInt()}%",
-                        time = time,
-                        iconRes = icon,
-                        tag = if (item.alert) "긴급" else null
-                    )
-                )
+                        adapter.addItem(
+                            RecentSoundData(
+                                title = label,
+                                accuracy = "정확도 ${(confidence * 100).toInt()}%",
+                                time = time,
+                                iconRes = icon,
+                                tag = if (item.alert) "긴급" else null
+                            )
+                        )
+                    }
+
+            }.onFailure {
+                it.printStackTrace()
             }
         }
     }
 
-
+    // ==================================================
+    // RecyclerView
+    // ==================================================
     private fun initRecentList() {
         adapter = RecentSoundAdapter(mutableListOf())
         binding.rvRecent.layoutManager = LinearLayoutManager(requireContext())
         binding.rvRecent.adapter = adapter
     }
 
+    // ==================================================
+    // ✅ 실시간 Broadcast 수신
+    // ==================================================
     private fun registerBroadcastReceiver() {
         if (soundReceiver != null) return
 
@@ -110,15 +130,25 @@ class HomeFragment : Fragment() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 if (intent?.action != SoundDetectionService.ACTION_SOUND_RESULT) return
 
-                val label = intent.getStringExtra(SoundDetectionService.EXTRA_LABEL) ?: return
-                val confidence = intent.getDoubleExtra(
-                    SoundDetectionService.EXTRA_CONFIDENCE, 0.0
-                )
-                val alert = intent.getBooleanExtra(
-                    SoundDetectionService.EXTRA_ALERT, false
-                )
+                val label =
+                    intent.getStringExtra(SoundDetectionService.EXTRA_LABEL) ?: return
+                val confidence =
+                    intent.getDoubleExtra(SoundDetectionService.EXTRA_CONFIDENCE, 0.0)
+                val alert =
+                    intent.getBooleanExtra(SoundDetectionService.EXTRA_ALERT, false)
 
-                val now = SimpleDateFormat("HH:mm:ss", Locale.KOREA).format(Date())
+                val nowTime = System.currentTimeMillis()
+
+                // ✅ 연속 중복 방지 (같은 소리 + 2초 이내)
+                if (label == lastLabel && nowTime - lastTime < 2000) return
+
+                lastLabel = label
+                lastTime = nowTime
+
+                val now = SimpleDateFormat(
+                    "HH:mm:ss",
+                    Locale.KOREA
+                ).format(Date())
 
                 val icon = when (label) {
                     "car_horn" -> R.drawable.ic_car
@@ -137,6 +167,7 @@ class HomeFragment : Fragment() {
                             tag = if (alert) "긴급" else null
                         )
                     )
+                    binding.rvRecent.scrollToPosition(0)
                 }
             }
         }
@@ -155,8 +186,9 @@ class HomeFragment : Fragment() {
         }
     }
 
-    /* --------- 마이크 --------- */
-
+    // ==================================================
+    // 마이크
+    // ==================================================
     private fun initMicButton() {
         binding.btnMic.setOnClickListener {
             isListening = !isListening
@@ -176,6 +208,9 @@ class HomeFragment : Fragment() {
         }
     }
 
+    // ==================================================
+    // 감도
+    // ==================================================
     private fun initSensitivity() {
         binding.btnSensitivity.setOnClickListener {
             SensitivityBottomSheet(
@@ -188,6 +223,9 @@ class HomeFragment : Fragment() {
         }
     }
 
+    // ==================================================
+    // 권한
+    // ==================================================
     private fun checkMicPermission() {
         if (ContextCompat.checkSelfPermission(
                 requireContext(),
