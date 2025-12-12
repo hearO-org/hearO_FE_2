@@ -13,9 +13,12 @@
         android:id="@+id/topHeader"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:padding="20dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="20dp"
         android:background="@drawable/home_header_bg">
 
+        <!-- 프로필 -->
         <LinearLayout
             android:orientation="horizontal"
             android:gravity="center_vertical"
@@ -23,7 +26,6 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/imgProfile"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/ic_profile_placeholder"
@@ -32,55 +34,88 @@
 
             <LinearLayout
                 android:orientation="vertical"
+                android:layout_marginStart="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/tvUserName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="hearO"
-                    android:textColor="@android:color/white"
                     android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white" />
 
                 <TextView
                     android:id="@+id/tvUserState"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="user"
-                    android:textColor="#F1F1F1"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:textColor="#F1F1F1" />
             </LinearLayout>
         </LinearLayout>
 
-        <FrameLayout
+
+        <!-- 알림 버튼 -->
+        <ImageView
+            android:id="@+id/btnAlarm"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
             android:layout_alignParentEnd="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:src="@drawable/ic_alarm" />
 
-            <ImageView
-                android:id="@+id/btnAlarm"
-                android:layout_width="26dp"
-                android:layout_height="26dp"
-                android:src="@drawable/ic_alarm" />
-
-            <TextView
-                android:id="@+id/tvAlarmBadge"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_gravity="top|end"
-                android:gravity="center"
-                android:text="3"
-                android:textColor="@android:color/white"
-                android:background="@drawable/badge_circle_red"
-                android:textSize="10sp" />
-        </FrameLayout>
     </RelativeLayout>
 
+
+    <!-- ======================= -->
+    <!-- 게시물 헤더 카드 -->
+    <!-- ======================= -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:padding="22dp"
+        android:gravity="center_vertical"
+        android:elevation="3dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="게시물 상세보기"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#222" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="게시물을 구경해보세요"
+                android:textSize="13sp"
+                android:textColor="#666"
+                android:layout_marginTop="6dp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/btnScrap"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="-10dp"
+            android:src="@drawable/ic_scrap"
+            android:padding="4dp" />
+
+    </LinearLayout>
+
     <!-- ===================================================== -->
-    <!-- ② 게시글 카드 (리사이클러뷰 밖에 위치) -->
+    <!-- ② 게시글 카드 -->
     <!-- ===================================================== -->
     <androidx.cardview.widget.CardView
         android:id="@+id/postCard"
@@ -90,73 +125,88 @@
         app:cardCornerRadius="16dp"
         app:cardElevation="2dp">
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:padding="18dp"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <!-- 작성자 정보 -->
             <LinearLayout
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:padding="18dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageView
-                    android:layout_width="42dp"
-                    android:layout_height="42dp"
-                    android:src="@drawable/ic_profile_placeholder"
-                    android:background="@drawable/profile_circle" />
-
+                <!-- 작성자 정보 -->
                 <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp">
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                    <TextView
-                        android:id="@+id/postUserName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="사용자"
-                        android:textStyle="bold"
-                        android:textColor="#222"
-                        android:textSize="15sp" />
+                    <ImageView
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:src="@drawable/ic_profile_placeholder"
+                        android:background="@drawable/profile_circle" />
 
-                    <TextView
-                        android:id="@+id/postTimeAndView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="방금 전 · 👁 0"
-                        android:textColor="#777"
-                        android:textSize="12sp" />
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_marginStart="12dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/postUserName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="사용자"
+                            android:textStyle="bold"
+                            android:textColor="#222"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/postTimeAndView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="방금 전 · 👁 0"
+                            android:textColor="#777"
+                            android:textSize="12sp" />
+                    </LinearLayout>
                 </LinearLayout>
+
+                <!-- 제목 -->
+                <TextView
+                    android:id="@+id/postTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#111"
+                    android:text="게시글 제목" />
+
+                <!-- 본문 -->
+                <TextView
+                    android:id="@+id/postContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:textColor="#333"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="6dp"
+                    android:text="게시글 내용이 여기에 표시됩니다." />
             </LinearLayout>
 
-            <!-- 제목 -->
-            <TextView
-                android:id="@+id/postTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="#111"
-                android:text="게시글 제목" />
+            <!-- ⭐ 게시글 메뉴 버튼 (내 글일 때만 표시) -->
+            <ImageView
+                android:id="@+id/postMenuButton"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="14dp"
+                android:padding="6dp"
+                android:src="@drawable/ic_menu" />
 
-            <!-- 본문 -->
-            <TextView
-                android:id="@+id/postContent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:textColor="#333"
-                android:textSize="14sp"
-                android:lineSpacingExtra="6dp"
-                android:text="게시글 내용이 여기에 표시됩니다." />
-
-        </LinearLayout>
+        </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
     <!-- 댓글 제목 -->
@@ -170,9 +220,7 @@
         android:textStyle="bold"
         android:textSize="16sp" />
 
-    <!-- ===================================================== -->
-    <!-- ③ 댓글 리스트 (RecyclerView) -->
-    <!-- ===================================================== -->
+    <!-- 댓글 리스트 -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerComment"
         android:layout_width="match_parent"
@@ -181,9 +229,7 @@
         android:padding="12dp"
         android:clipToPadding="false" />
 
-    <!-- ===================================================== -->
-    <!-- ④ 댓글 입력창 -->
-    <!-- ===================================================== -->
+    <!-- 댓글 입력 -->
     <LinearLayout
         android:orientation="horizontal"
         android:background="@android:color/white"

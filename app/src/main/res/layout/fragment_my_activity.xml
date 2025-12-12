@@ -142,7 +142,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!-- 게시물 북마크 -->
         <TextView
             android:id="@+id/tabBookmark"
             android:text="북마크"
@@ -150,29 +149,40 @@
             android:padding="10dp"
             android:background="@drawable/tab_selected_bg"
             android:textColor="@color/purple_500"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="6dp"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:gravity="center"
             android:layout_height="45dp" />
 
-        <!-- 수어 좋아요 -->
         <TextView
             android:id="@+id/tabLike"
             android:text="좋아요"
             android:padding="10dp"
             android:background="@drawable/tab_unselected_bg"
             android:textColor="#666"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="6dp"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:gravity="center"
             android:layout_height="45dp" />
 
-        <!-- 내가 쓴 댓글 -->
         <TextView
             android:id="@+id/tabComment"
             android:text="댓글"
+            android:padding="10dp"
+            android:background="@drawable/tab_unselected_bg"
+            android:textColor="#666"
+            android:layout_marginEnd="6dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="45dp" />
+
+        <!-- 🔥 내가 쓴 글 -->
+        <TextView
+            android:id="@+id/tabMyPost"
+            android:text="내가 쓴 글"
             android:padding="10dp"
             android:background="@drawable/tab_unselected_bg"
             android:textColor="#666"

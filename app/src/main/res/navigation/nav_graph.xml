@@ -5,18 +5,14 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/homeFragment">
 
-    <!-- ====================================== -->
-    <!--  HomeFragment                          -->
-    <!-- ====================================== -->
+    <!-- ================= HOME ================= -->
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.hearo2.home.HomeFragment"
         android:label="홈"
         tools:layout="@layout/fragment_home" />
 
-    <!-- ====================================== -->
-    <!--  Community List                        -->
-    <!-- ====================================== -->
+    <!-- =============== COMMUNITY LIST =============== -->
     <fragment
         android:id="@+id/communityFragment"
         android:name="com.example.hearo2.community.CommunityFragment"
@@ -24,41 +20,56 @@
         tools:layout="@layout/fragment_community">
 
         <action
-            android:id="@+id/action_communityFragment_to_communityDetailFragment"
+            android:id="@+id/action_community_to_detail"
             app:destination="@id/communityDetailFragment" />
 
         <action
-            android:id="@+id/action_communityFragment_to_communityWriteFragment"
+            android:id="@+id/action_community_to_write"
             app:destination="@id/communityWriteFragment" />
     </fragment>
 
-    <!-- ====================================== -->
-    <!--  Community Detail                      -->
-    <!-- ====================================== -->
+    <!-- =============== COMMUNITY DETAIL =============== -->
     <fragment
         android:id="@+id/communityDetailFragment"
         android:name="com.example.hearo2.community.CommunityDetailFragment"
         android:label="게시글 상세"
         tools:layout="@layout/fragment_community_detail">
 
+        <!-- postId: integer로 변경 -->
         <argument
             android:name="postId"
             app:argType="integer"
-            android:defaultValue="-1" />
+            android:defaultValue="0" />
+
+        <action
+            android:id="@+id/action_communityDetailFragment_to_communityWriteFragment"
+            app:destination="@id/communityWriteFragment" />
 
         <action
             android:id="@+id/action_communityDetailFragment_to_replyThreadFragment"
             app:destination="@id/replyThreadFragment" />
     </fragment>
 
-    <!-- 게시글 작성 -->
+    <!-- =============== WRITE POST =============== -->
     <fragment
         android:id="@+id/communityWriteFragment"
         android:name="com.example.hearo2.community.CommunityWriteFragment"
-        android:label="게시글 작성"
-        tools:layout="@layout/fragment_community_write" />
+        android:label="글쓰기"
+        tools:layout="@layout/fragment_community_write">
 
-    <!-- 댓글 스레드 -->
+        <!-- 수정 모드에서 postId 전달 -->
+        <argument
+            android:name="postId"
+            app:argType="integer"
+            android:defaultValue="0" />
+
+        <argument
+            android:name="isEditMode"
+            app:argType="boolean"
+            android:defaultValue="false" />
+    </fragment>
+
+    <!-- =============== REPLY THREAD =============== -->
     <fragment
         android:id="@+id/replyThreadFragment"
         android:name="com.example.hearo2.community.ReplyThreadFragment"
@@ -66,15 +77,19 @@
         tools:layout="@layout/fragment_reply_thread">
 
         <argument
+            android:name="postId"
+            app:argType="integer"
+            android:defaultValue="0" />
+
+        <argument
             android:name="commentId"
             app:argType="integer"
-            android:defaultValue="-1" />
+            android:defaultValue="0" />
     </fragment>
 
+    <!-- ================= OTHER SCREENS ================= -->
 
-    <!-- ====================================== -->
-    <!--  Custom Info (맞춤 정보 목록)         -->
-    <!-- ====================================== -->
+    <!-- Custom Info -->
     <fragment
         android:id="@+id/customInfoFragment"
         android:name="com.example.hearo2.custominfo.CustomInfoFragment"
@@ -86,10 +101,6 @@
             app:destination="@id/jobDetailFragment" />
     </fragment>
 
-
-    <!-- ====================================== -->
-    <!--  Job Detail                            -->
-    <!-- ====================================== -->
     <fragment
         android:id="@+id/jobDetailFragment"
         android:name="com.example.hearo2.custominfo.JobDetailFragment"
@@ -101,10 +112,7 @@
             app:argType="string" />
     </fragment>
 
-
-    <!-- ====================================== -->
-    <!--  Dictionary                            -->
-    <!-- ====================================== -->
+    <!-- Dictionary -->
     <fragment
         android:id="@+id/dictionaryFragment"
         android:name="com.example.hearo2.dictionary.DictionaryFragment"
@@ -112,30 +120,22 @@
         tools:layout="@layout/fragment_dictionary">
 
         <action
-            android:id="@+id/action_dictionaryFragment_to_dictionaryDetailFragment"
+            android:id="@+id/action_dictionary_to_dictionaryDetail"
             app:destination="@id/dictionaryDetailFragment" />
     </fragment>
 
-    <!-- ====================================== -->
-    <!-- Dictionary Detail                      -->
-    <!-- ====================================== -->
     <fragment
         android:id="@+id/dictionaryDetailFragment"
         android:name="com.example.hearo2.dictionary.DictionaryDetailFragment"
         android:label="사전 상세"
         tools:layout="@layout/fragment_dictionary_detail">
 
-        <!-- 🔥 기존 title/description/category/views/imageRes 모두 삭제 -->
-        <!-- 🔥 signId 하나만 받는다 -->
         <argument
             android:name="id"
             app:argType="integer" />
     </fragment>
 
-
-    <!-- ====================================== -->
-    <!--  MyPage                                -->
-    <!-- ====================================== -->
+    <!-- MyPage -->
     <fragment
         android:id="@+id/myPageFragment"
         android:name="com.example.hearo2.mypage.MyPageFragment"
@@ -144,18 +144,18 @@
 
         <action
             android:id="@+id/action_myPage_to_profileEdit"
-            app:destination="@id/profileEditFragment"/>
+            app:destination="@id/profileEditFragment" />
 
         <action
             android:id="@+id/action_myPage_to_myActivity"
-            app:destination="@id/myActivityFragment"/>
+            app:destination="@id/myActivityFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/profileEditFragment"
         android:name="com.example.hearo2.mypage.ProfileEditFragment"
         android:label="프로필 수정"
-        tools:layout="@layout/fragment_profile_edit"/>
+        tools:layout="@layout/fragment_profile_edit" />
 
     <fragment
         android:id="@+id/myActivityFragment"
@@ -164,9 +164,8 @@
         tools:layout="@layout/fragment_my_activity">
 
         <action
-            android:id="@+id/action_myActivity_to_dictionaryDetailFragment"
+            android:id="@+id/action_myActivity_to_dictionaryDetail"
             app:destination="@id/dictionaryDetailFragment" />
     </fragment>
-
 
 </navigation>

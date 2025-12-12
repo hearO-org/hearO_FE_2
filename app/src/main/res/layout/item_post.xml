@@ -59,7 +59,8 @@
                 android:layout_marginStart="6dp"/>
 
             <ImageView
-                android:src="@drawable/ic_heart_empty"
+                android:id="@+id/btnScrap"
+                android:src="@drawable/ic_scrap"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:layout_marginStart="12dp"/>

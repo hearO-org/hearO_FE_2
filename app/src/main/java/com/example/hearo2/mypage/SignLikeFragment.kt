@@ -4,10 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hearo2.R
 import com.example.hearo2.databinding.FragmentSignLikeBinding
 import com.example.hearo2.dictionary.repository.SignRepository
@@ -23,7 +24,8 @@ class SignLikeFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSignLikeBinding.inflate(inflater, container, false)
@@ -32,24 +34,21 @@ class SignLikeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        // 🔥 Adapter 생성 + 클릭 시 상세보기 이동 구현
-        val adapter = SignLikeAdapter { signItem ->
-
-            // 🔥 DictionaryDetailFragment 로 이동 (id 전달)
-            val action = MyActivityFragmentDirections
-                .actionMyActivityToDictionaryDetailFragment(signItem.id)
-
-            findNavController().navigate(action)
+        // ✅ 이름을 signLikeAdapter 로 변경
+        val signLikeAdapter = SignLikeAdapter { signItem ->
+            findNavController().navigate(
+                R.id.dictionaryDetailFragment,
+                bundleOf("id" to signItem.id)
+            )
         }
 
         binding.recyclerLikeSigns.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            LinearLayoutManager(requireContext())
 
-        binding.recyclerLikeSigns.adapter = adapter
+        binding.recyclerLikeSigns.adapter = signLikeAdapter
 
-        // LiveData 관찰
         viewModel.favoriteSigns.observe(viewLifecycleOwner) { list ->
-            adapter.submitList(list)
+            signLikeAdapter.submitList(list)
         }
 
         viewModel.loadFavoriteSigns()

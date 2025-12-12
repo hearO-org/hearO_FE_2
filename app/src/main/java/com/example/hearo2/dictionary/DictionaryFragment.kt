@@ -135,8 +135,10 @@ class DictionaryFragment : Fragment() {
 
 
     private fun openDetail(item: SignItem) {
-        val action = DictionaryFragmentDirections
-            .actionDictionaryFragmentToDictionaryDetailFragment(item.id)
+        val action =
+            DictionaryFragmentDirections
+                .actionDictionaryToDictionaryDetail(item.id)
+
         findNavController().navigate(action)
     }
 }

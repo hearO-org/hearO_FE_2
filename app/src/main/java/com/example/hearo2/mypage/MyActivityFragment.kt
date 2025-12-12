@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.hearo2.R
 import com.example.hearo2.databinding.FragmentMyActivityBinding
+import com.example.hearo2.mypage.MyCommentFragment
+
 
 class MyActivityFragment : Fragment() {
 
@@ -28,17 +30,18 @@ class MyActivityFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        // 🔙 뒤로가기 버튼 추가
+        // 🔙 뒤로가기
         binding.btnBack.setOnClickListener {
             findNavController().navigateUp()
         }
 
-        // 기본: 북마크 탭
+        // 기본 탭
         showBookmark()
 
         binding.tabBookmark.setOnClickListener { showBookmark() }
         binding.tabLike.setOnClickListener { showLike() }
         binding.tabComment.setOnClickListener { showComment() }
+        binding.tabMyPost.setOnClickListener { showMyPost() }
     }
 
     private fun selectTab(selected: TextView, others: List<TextView>) {
@@ -59,18 +62,35 @@ class MyActivityFragment : Fragment() {
     }
 
     private fun showBookmark() {
-        selectTab(binding.tabBookmark, listOf(binding.tabLike, binding.tabComment))
+        selectTab(
+            binding.tabBookmark,
+            listOf(binding.tabLike, binding.tabComment, binding.tabMyPost)
+        )
         fadeChange(BookmarkFragment())
     }
 
     private fun showLike() {
-        selectTab(binding.tabLike, listOf(binding.tabBookmark, binding.tabComment))
-        fadeChange(SignLikeFragment())   // ⭐ 수어 사전 좋아요 Fragment로 변경
+        selectTab(
+            binding.tabLike,
+            listOf(binding.tabBookmark, binding.tabComment, binding.tabMyPost)
+        )
+        fadeChange(SignLikeFragment())
     }
 
     private fun showComment() {
-        selectTab(binding.tabComment, listOf(binding.tabBookmark, binding.tabLike))
-        fadeChange(CommentFragment())
+        selectTab(
+            binding.tabComment,
+            listOf(binding.tabBookmark, binding.tabLike, binding.tabMyPost)
+        )
+        fadeChange(MyCommentFragment())
+    }
+
+    private fun showMyPost() {
+        selectTab(
+            binding.tabMyPost,
+            listOf(binding.tabBookmark, binding.tabLike, binding.tabComment)
+        )
+        fadeChange(MyPostFragment())
     }
 
     override fun onDestroyView() {

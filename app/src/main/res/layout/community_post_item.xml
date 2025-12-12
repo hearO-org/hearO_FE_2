@@ -76,26 +76,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <!-- 조회수 -->
-            <ImageView
-                android:src="@drawable/ic_eye"
-                android:layout_width="18dp"
-                android:layout_height="18dp"/>
-
-            <TextView
-                android:id="@+id/tvViews"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:textColor="#666"
-                android:textSize="12sp" />
 
             <!-- 좋아요 -->
             <ImageView
-                android:src="@drawable/ic_heart_empty"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_marginStart="16dp"/>
+                android:id="@+id/btnScrap"
+                android:src="@drawable/ic_scrap"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="5dp"/>
 
             <TextView
                 android:id="@+id/tvLike"
@@ -108,9 +96,9 @@
             <!-- 댓글 -->
             <ImageView
                 android:src="@drawable/ic_comment"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_marginStart="16dp"/>
+                android:layout_width="20dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="14dp"/>
 
             <TextView
                 android:id="@+id/tvCommentCount"

@@ -166,11 +166,40 @@
                     app:flexDirection="row"
                     app:justifyContent="flex_start">
 
-                    <TextView style="@style/TabChipStyle" android:text="자유 토론" />
-                    <TextView style="@style/TabChipStyle" android:text="질문" />
-                    <TextView style="@style/TabChipStyle" android:text="후기/경험" />
-                    <TextView style="@style/TabChipStyle" android:text="정보 공유" />
-                    <TextView style="@style/TabChipStyle" android:text="모임/만남" />
+                    <TextView
+                        style="@style/TabChipStyle"
+                        android:text="일반"
+                        android:tag="GENERAL"/>
+
+                    <TextView
+                        style="@style/TabChipStyle"
+                        android:text="질문"
+                        android:tag="QUESTION"/>
+
+                    <TextView
+                        style="@style/TabChipStyle"
+                        android:text="후기"
+                        android:tag="REVIEW"/>
+
+                    <TextView
+                        style="@style/TabChipStyle"
+                        android:text="수어학습/정보"
+                        android:tag="STUDY"/>
+
+                    <TextView
+                        style="@style/TabChipStyle"
+                        android:text="안전/대처"
+                        android:tag="SAFETY"/>
+
+                    <TextView
+                        style="@style/TabChipStyle"
+                        android:text="정책/지원"
+                        android:tag="POLICY"/>
+
+                    <TextView
+                        style="@style/TabChipStyle"
+                        android:text="취업/교육"
+                        android:tag="JOB"/>
 
                 </com.google.android.flexbox.FlexboxLayout>
 
@@ -294,12 +323,14 @@
                         android:src="@drawable/ic_camera" />
 
                     <TextView
+                        android:id="@+id/tvImageCount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="이미지 업로드 (0/5)"
                         android:textSize="13sp"
                         android:textColor="#777"
                         android:layout_marginTop="8dp" />
+
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 

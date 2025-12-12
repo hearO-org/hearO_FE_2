@@ -9,13 +9,13 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hearo2.R
-import com.example.hearo2.databinding.FragmentBookmarkBinding
+import com.example.hearo2.databinding.FragmentMyPostBinding
 import com.example.hearo2.mypage.adapter.MyPostAdapter
 import com.example.hearo2.mypage.viewmodel.MyPostViewModel
 
-class BookmarkFragment : Fragment() {
+class MyPostFragment : Fragment() {
 
-    private var _binding: FragmentBookmarkBinding? = null
+    private var _binding: FragmentMyPostBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: MyPostViewModel by viewModels()
@@ -25,25 +25,23 @@ class BookmarkFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentBookmarkBinding.inflate(inflater, container, false)
+        _binding = FragmentMyPostBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         val adapter = MyPostAdapter { post ->
-            // ✅ 무조건 커뮤니티 상세로 이동
             val bundle = Bundle().apply {
                 putInt("postId", post.id.toInt())
             }
-
             findNavController().navigate(
                 R.id.communityDetailFragment,
                 bundle
             )
         }
 
-        binding.recyclerBookmark.apply {
+        binding.recyclerMyPost.apply {
             layoutManager = LinearLayoutManager(requireContext())
             this.adapter = adapter
         }
@@ -52,8 +50,7 @@ class BookmarkFragment : Fragment() {
             adapter.submitList(it)
         }
 
-        // 🔥 스크랩한 게시글 조회
-        viewModel.loadScrappedPosts()
+        viewModel.loadMyPosts()
     }
 
     override fun onDestroyView() {

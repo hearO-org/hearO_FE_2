@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/hearo_bg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- 상단 헤더 -->
+    <RelativeLayout
+        android:id="@+id/topHeader"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="20dp"
+        android:background="@drawable/home_header_bg">
+
+        <!-- 프로필 영역 -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_profile_placeholder"
+                android:background="@drawable/profile_circle"
+                android:scaleType="centerCrop" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_marginStart="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="hearO"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:text="user"
+                    android:textSize="12sp"
+                    android:textColor="#F1F1F1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 알림 버튼 -->
+        <ImageView
+            android:id="@+id/btnAlarm"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_alarm" />
+
+
+    </RelativeLayout>
+
+    <!-- 중간 헤더 (글쓰기 안내 → 필요 없으면 삭제 가능) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:padding="22dp"
+        android:gravity="center_vertical"
+        android:elevation="3dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="내가 작성한 글"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#222" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="작성한 글을 확인하세요"
+                android:textSize="13sp"
+                android:textColor="#666"
+                android:layout_marginTop="6dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <!-- 리스트 영역 -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerMyPosts"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp"
+        android:clipToPadding="false" />
+
+</LinearLayout>
