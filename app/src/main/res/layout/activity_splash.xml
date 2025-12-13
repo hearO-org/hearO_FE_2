@@ -9,7 +9,7 @@
         android:id="@+id/imgLogo"
         android:layout_width="160dp"
         android:layout_height="160dp"
-        android:src="@drawable/ic_hearo_logo"
+        android:src="@drawable/logo"
         android:contentDescription="@string/app_name"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

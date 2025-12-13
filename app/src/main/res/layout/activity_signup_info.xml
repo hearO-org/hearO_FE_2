@@ -34,14 +34,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- 카메라 버튼 -->
-        <ImageView
-            android:id="@+id/btnProfileEdit"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:src="@drawable/ic_camera"
-            app:layout_constraintBottom_toBottomOf="@id/imgProfile"
-            app:layout_constraintEnd_toEndOf="@id/imgProfile" />
 
         <!-- 제목 -->
         <TextView

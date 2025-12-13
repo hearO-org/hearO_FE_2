@@ -32,13 +32,6 @@
                     android:textStyle="bold"
                     android:textSize="17sp" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tvUserState"
-                    android:text="user"
-                    android:textColor="#EDEDED"
-                    android:textSize="12sp" />
             </LinearLayout>
 
             <ImageView
@@ -46,7 +39,8 @@
                 android:layout_width="26dp"
                 android:layout_height="26dp"
                 android:layout_alignParentEnd="true"
-                android:src="@drawable/ic_alarm" />
+                android:src="@drawable/ic_alarm"
+                android:layout_marginTop="5dp"/>
         </RelativeLayout>
 
         <!-- 흰색 헤더 -->

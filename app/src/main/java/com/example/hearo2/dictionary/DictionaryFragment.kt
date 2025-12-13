@@ -15,24 +15,36 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hearo2.R
 import com.example.hearo2.databinding.FragmentDictionaryBinding
+import com.example.hearo2.dictionary.model.SignItem
 import com.example.hearo2.dictionary.viewmodel.DictionaryViewModel
 import com.example.hearo2.dictionary.viewmodel.DictionaryViewModelFactory
-import com.example.hearo2.dictionary.model.SignItem
 
 class DictionaryFragment : Fragment() {
 
     private lateinit var binding: FragmentDictionaryBinding
     private lateinit var adapter: DictionaryAdapter
 
-    // ⭐ 반드시 Factory 적용해야 정상 동작
     private val viewModel: DictionaryViewModel by viewModels {
         DictionaryViewModelFactory(requireContext())
     }
 
     private var selectedCategory: String = "전체"
 
+    /** ✅ UI에서 사용할 카테고리 (최종) */
+    private val categories = listOf(
+        "전체",
+        "경제",
+        "사회생활",
+        "정치",
+        "인간",
+        "식생활",
+        "교육",
+        "종교"
+    )
+
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentDictionaryBinding.inflate(inflater, container, false)
@@ -44,18 +56,19 @@ class DictionaryFragment : Fragment() {
 
         setupRecycler()
         observeViewModel()
-        viewModel.loadAllSigns()
-
         setupSearch()
-        setupCategoryButtons()
+        setupCategoryUI()
+
+        viewModel.loadAllSigns()
     }
 
-
-    // 🔥🔥 수정된 부분: Adapter 에 viewModel 전달 추가
+    // ----------------------------------------------------
+    // RecyclerView
+    // ----------------------------------------------------
     private fun setupRecycler() {
         adapter = DictionaryAdapter(
             mutableListOf(),
-            viewModel,              // ⭐ 추가됨! (즐겨찾기 서버 반영 위해 필요)
+            viewModel
         ) { item ->
             openDetail(item)
         }
@@ -64,76 +77,128 @@ class DictionaryFragment : Fragment() {
         binding.rvDictionary.adapter = adapter
     }
 
-
     private fun observeViewModel() {
         viewModel.signList.observe(viewLifecycleOwner) { list ->
-            adapter.updateList(list)
+            applyCategoryFilter(list)
         }
 
         viewModel.error.observe(viewLifecycleOwner) {
-            Toast.makeText(requireContext(), "오류 발생: $it", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
         }
     }
 
+    // ----------------------------------------------------
+    // 🔥 카테고리 UI 생성
+    // ----------------------------------------------------
+    private fun setupCategoryUI() {
+        binding.categoryContainer.removeAllViews()
 
-    private fun setupCategoryButtons() {
+        categories.forEach { category ->
+            val tv = LayoutInflater.from(requireContext())
+                .inflate(
+                    R.layout.item_category_chip,
+                    binding.categoryContainer,
+                    false
+                ) as TextView
 
-        val categoryMap = mapOf(
-            "전체" to binding.catAll,
-            "정치" to binding.catPolitics,
-            "경제" to binding.catEconomy,
-            "인간" to binding.catHuman
-        )
+            tv.text = category
+            updateCategoryStyle(tv, category == selectedCategory)
 
-        categoryMap.forEach { (categoryName, textView) ->
-            textView.setOnClickListener {
-                selectedCategory = categoryName
-                updateCategoryUI(categoryMap)
-                applyCategoryFilter()
+            tv.setOnClickListener {
+                selectedCategory = category
+                updateAllCategoryStyles()
+                applyCategoryFilter(viewModel.signList.value ?: emptyList())
             }
-        }
 
-        updateCategoryUI(categoryMap)
+            binding.categoryContainer.addView(tv)
+        }
     }
 
-    private fun updateCategoryUI(categoryMap: Map<String, TextView>) {
-        categoryMap.forEach { (name, tv) ->
-            if (name == selectedCategory) {
-                tv.setBackgroundResource(R.drawable.category_selected_bg)
-                tv.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.white))
-            } else {
-                tv.setBackgroundResource(R.drawable.category_unselected_bg)
-                tv.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray_700))
+    private fun updateAllCategoryStyles() {
+        for (i in 0 until binding.categoryContainer.childCount) {
+            val tv = binding.categoryContainer.getChildAt(i) as TextView
+            updateCategoryStyle(tv, tv.text.toString() == selectedCategory)
+        }
+    }
+
+    private fun updateCategoryStyle(tv: TextView, selected: Boolean) {
+        if (selected) {
+            tv.setBackgroundResource(R.drawable.category_selected_bg)
+            tv.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.white))
+        } else {
+            tv.setBackgroundResource(R.drawable.category_unselected_bg)
+            tv.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray_700))
+        }
+    }
+
+    // ----------------------------------------------------
+    // 🔍 카테고리 필터 (핵심 수정)
+    // ----------------------------------------------------
+    private fun applyCategoryFilter(list: List<SignItem>) {
+
+        if (selectedCategory == "전체") {
+            adapter.updateList(list)
+            return
+        }
+
+        val filtered = list.filter { item ->
+            val serverCategory = item.categoryType ?: return@filter false
+
+            when (selectedCategory) {
+                "경제" ->
+                    serverCategory.contains("경제")
+
+                "사회생활" ->
+                    serverCategory.contains("사회")
+
+                "정치" ->
+                    serverCategory.contains("정치")
+
+                "인간" ->
+                    serverCategory.contains("인간")
+
+                "식생활" ->
+                    serverCategory.contains("식생활")
+
+                "교육" ->
+                    serverCategory.contains("교육")
+
+                "종교" ->
+                    serverCategory.contains("종교")
+
+                else -> false
             }
-        }
-    }
-
-    private fun applyCategoryFilter() {
-        val currentList = viewModel.signList.value ?: emptyList()
-
-        val filtered = when (selectedCategory) {
-            "전체" -> currentList
-            else -> currentList.filter { it.categoryType == selectedCategory }
         }
 
         adapter.updateList(filtered)
     }
 
-
+    // ----------------------------------------------------
+    // 🔍 검색
+    // ----------------------------------------------------
     private fun setupSearch() {
         binding.etSearch.setOnEditorActionListener { _, actionId, event ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH ||
-                (event?.keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN)
+            if (
+                actionId == EditorInfo.IME_ACTION_SEARCH ||
+                (event?.keyCode == KeyEvent.KEYCODE_ENTER &&
+                        event.action == KeyEvent.ACTION_DOWN)
             ) {
                 val query = binding.etSearch.text.toString().trim()
-                if (query.isNotEmpty()) viewModel.search(query)
-                else viewModel.loadAllSigns()
+                if (query.isNotEmpty()) {
+                    viewModel.search(query)
+                } else {
+                    viewModel.loadAllSigns()
+                }
                 true
-            } else false
+            } else {
+                false
+            }
         }
     }
 
-
+    // ----------------------------------------------------
+    // 상세 이동
+    // ----------------------------------------------------
     private fun openDetail(item: SignItem) {
         val action =
             DictionaryFragmentDirections

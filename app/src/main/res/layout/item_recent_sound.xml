@@ -82,15 +82,4 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!-- 대처법 버튼 -->
-    <TextView
-        android:id="@+id/btnAction"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="대처법"
-        android:textStyle="bold"
-        android:textColor="#555"
-        android:textSize="12sp"
-        android:background="@drawable/chip_bg"
-        android:padding="8dp"/>
 </LinearLayout>

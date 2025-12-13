@@ -50,13 +50,7 @@
                         android:textSize="16sp"
                         android:textStyle="bold"/>
 
-                    <TextView
-                        android:id="@+id/tvUserState"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="user"
-                        android:textColor="#F1F1F1"
-                        android:textSize="12sp"/>
+
                 </LinearLayout>
             </LinearLayout>
 
@@ -70,18 +64,9 @@
                     android:id="@+id/btnAlarm"
                     android:layout_width="26dp"
                     android:layout_height="26dp"
-                    android:src="@drawable/ic_alarm" />
+                    android:src="@drawable/ic_alarm"
+                    android:layout_marginTop="5dp"/>
 
-                <TextView
-                    android:id="@+id/tvAlarmBadge"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:layout_gravity="top|end"
-                    android:background="@drawable/badge_circle_red"
-                    android:text="3"
-                    android:gravity="center"
-                    android:textColor="@android:color/white"
-                    android:textSize="10sp"/>
             </FrameLayout>
         </RelativeLayout>
 
@@ -122,11 +107,7 @@
                     android:textStyle="bold"
                     android:textColor="#222222"/>
 
-                <ImageView
-                    android:id="@+id/btnFavorite"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_heart_empty" />
+
             </LinearLayout>
 
             <!-- 설명 텍스트 -->

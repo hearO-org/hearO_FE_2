@@ -47,13 +47,6 @@
                     android:textStyle="bold"
                     android:textColor="@android:color/white" />
 
-                <TextView
-                    android:id="@+id/tvUserState"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="user"
-                    android:textSize="12sp"
-                    android:textColor="#F1F1F1" />
             </LinearLayout>
         </LinearLayout>
 
@@ -64,7 +57,8 @@
             android:layout_width="26dp"
             android:layout_height="26dp"
             android:layout_alignParentEnd="true"
-            android:src="@drawable/ic_alarm" />
+            android:src="@drawable/ic_alarm"
+            android:layout_marginTop="5dp"/>
 
     </RelativeLayout>
 

@@ -37,7 +37,8 @@
             android:layout_width="26dp"
             android:layout_height="26dp"
             android:layout_alignParentEnd="true"
-            android:src="@drawable/ic_alarm"/>
+            android:src="@drawable/ic_alarm"
+            android:layout_marginTop="5dp"/>
     </RelativeLayout>
 
     <!-- ================= 설명 ================= -->

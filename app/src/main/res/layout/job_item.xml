@@ -31,12 +31,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"/>
 
-            <ImageView
-                android:id="@+id/btnWish"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:src="@drawable/ic_heart_empty"
-                app:tint="#9CA3AF" />
+
         </LinearLayout>
 
         <!-- 회사명 -->
