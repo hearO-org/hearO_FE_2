@@ -181,7 +181,7 @@
                     android:id="@+id/btnEditProfile"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_marginStart="130dp"
+                    android:layout_marginStart="110dp"
                     android:src="@drawable/ic_edit" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>

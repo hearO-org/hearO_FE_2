@@ -51,9 +51,7 @@ class JobDetailFragment : Fragment() {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
-        binding.btnFavorite.setOnClickListener {
-            toggleFavoriteIcon()
-        }
+
     }
 
     private var isFavorite = false
@@ -65,7 +63,6 @@ class JobDetailFragment : Fragment() {
         else
             R.drawable.ic_heart_empty
 
-        binding.btnFavorite.setImageResource(icon)
     }
 
     private fun initObservers() {

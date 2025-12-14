@@ -154,7 +154,7 @@ class HomeFragment : Fragment() {
                     "car_horn" -> R.drawable.ic_car
                     "fire_alarm", "siren" -> R.drawable.ic_fire
                     "baby_crying" -> R.drawable.ic_baby
-                    else -> R.drawable.ic_mic_idle
+                    else -> R.drawable.ic_alarm
                 }
 
                 requireActivity().runOnUiThread {

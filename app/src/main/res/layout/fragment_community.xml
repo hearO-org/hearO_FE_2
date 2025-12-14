@@ -117,51 +117,65 @@
                 android:paddingHorizontal="15dp"
                 android:textSize="14sp"/>
 
-            <!-- 태그 인기 영역 -->
+
+            <!-- 탭 -->
+            <!-- 🔹 카테고리 탭 (가로 스크롤) -->
             <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="20dp"
-                android:paddingTop="10dp"
-                android:scrollbars="none">
+                android:scrollbars="none"
+                android:paddingHorizontal="20dp">
 
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingVertical="15dp">
 
                     <TextView
-                        style="@style/TagStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="#재활용보대처법"/>
-                    <TextView
-                        style="@style/TagStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="#수어학습"/>
+                        android:id="@+id/tabAll"
+                        style="@style/TabChipStyle"
+                        android:text="전체"/>
 
                     <TextView
-                        style="@style/TagStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="#고용지원신청"/>
+                        android:id="@+id/tabGeneral"
+                        style="@style/TabChipStyle"
+                        android:text="일반"/>
+
+                    <TextView
+                        android:id="@+id/tabQuestion"
+                        style="@style/TabChipStyle"
+                        android:text="질문"/>
+
+                    <TextView
+                        android:id="@+id/tabReview"
+                        style="@style/TabChipStyle"
+                        android:text="후기"/>
+
+                    <TextView
+                        android:id="@+id/tabSign"
+                        style="@style/TabChipStyle"
+                        android:text="수어학습정보"/>
+
+                    <TextView
+                        android:id="@+id/tabSafety"
+                        style="@style/TabChipStyle"
+                        android:text="안전/대처"/>
+
+                    <TextView
+                        android:id="@+id/tabPolicy"
+                        style="@style/TabChipStyle"
+                        android:text="정책/지원"/>
+
+                    <TextView
+                        android:id="@+id/tabJob"
+                        style="@style/TabChipStyle"
+                        android:text="취업/교육"/>
+
                 </LinearLayout>
             </HorizontalScrollView>
 
-            <!-- 탭 -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingHorizontal="20dp"
-                android:paddingVertical="15dp">
 
-                <TextView style="@style/TabChipStyle" android:text="전체 245"/>
-                <TextView style="@style/TabChipStyle" android:text="질문 89"/>
-                <TextView style="@style/TabChipStyle" android:text="팁 76"/>
-                <TextView style="@style/TabChipStyle" android:text="후기 54"/>
-            </LinearLayout>
 
             <!-- 🔥 RecyclerView 영역 -->
             <androidx.recyclerview.widget.RecyclerView

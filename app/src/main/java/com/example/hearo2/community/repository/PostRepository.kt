@@ -16,8 +16,14 @@ class PostRepository {
     suspend fun loadPostDetail(postId: Long) =
         api.getPostDetail(postId)
 
-    suspend fun searchPosts(query: String?, category: String?, tag: String?, page: Int, size: Int) =
-        api.searchPosts(query, category, tag, page, size)
+    suspend fun searchPosts(
+        query: String?,
+        category: String?,
+        tag: String?,
+        page: Int,
+        size: Int
+    ) = api.searchPosts(query, category, tag, page, size)
+
 
     suspend fun deletePost(postId: Long) = api.deletePost(postId)
 

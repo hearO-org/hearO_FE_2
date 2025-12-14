@@ -31,6 +31,16 @@ class PostAdapter(
             binding.tvContent.text = item.content
             binding.tvWriter.text = item.authorNickname
             binding.tvCommentCount.text = "-"
+            binding.tvCategory.text = when (item.category) {
+                "GENERAL" -> "일반"
+                "QUESTION" -> "질문"
+                "REVIEW" -> "후기"
+                "SIGN_INFO" -> "수어학습정보"
+                "SAFETY" -> "안전/대처"
+                "POLICY" -> "정책/지원"
+                "JOB" -> "취업/교육"
+                else -> "기타"
+            }
 
             updateScrapIcon(item.scrapped)
 

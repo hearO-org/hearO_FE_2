@@ -20,24 +20,31 @@ import com.example.hearo2.dictionary.viewmodel.DictionaryViewModel
 import com.example.hearo2.dictionary.viewmodel.DictionaryViewModelFactory
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.source.ProgressiveMediaSource
+import com.google.android.exoplayer2.upstream.DefaultDataSource
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
+
+import android.util.Log
 
 class DictionaryDetailFragment : Fragment() {
 
     private lateinit var binding: FragmentDictionaryDetailBinding
     private lateinit var viewModel: DictionaryDetailViewModel
 
-    // ⭐ 목록 ViewModel 공유 (즐겨찾기 동기화용)
+    // ⭐ 목록 ViewModel 공유 (즐겨찾기 동기화)
     private val listViewModel: DictionaryViewModel by activityViewModels {
         DictionaryViewModelFactory(requireActivity())
     }
 
+    // 👉 nullable 정상
     private var player: ExoPlayer? = null
     private var isFavorite = false
     private var signId: Int = -1
     private var currentVideoUrl: String? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentDictionaryDetailBinding.inflate(inflater, container, false)
@@ -74,7 +81,7 @@ class DictionaryDetailFragment : Fragment() {
             isFavorite = data.favorite == true
             updateFavoriteIcon()
 
-            // 영상 썸네일
+            // 썸네일
             Glide.with(this)
                 .load(data.thumbnailUrl)
                 .placeholder(R.drawable.sample_reference)
@@ -124,38 +131,48 @@ class DictionaryDetailFragment : Fragment() {
         binding.imgVideoThumbnail.setOnClickListener { startVideo() }
         binding.btnReplay.setOnClickListener { startVideo() }
 
-        // 외부 사전 열기
+        // 외부 사전
         binding.btnOpenDictionary.setOnClickListener {
             startActivity(
-                Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse("https://sldict.korean.go.kr/")
-                )
+                Intent(Intent.ACTION_VIEW, Uri.parse("https://sldict.korean.go.kr/"))
             )
         }
     }
 
     // --------------------------------------------------
-    // 🎬 영상 재생 (화면 안 보이던 문제 해결)
+    // 🎬 영상 재생 (검은 화면 해결 버전)
     // --------------------------------------------------
     private fun startVideo() {
         val url = currentVideoUrl ?: return
 
-        binding.playerView.visibility = View.VISIBLE
         binding.imgVideoThumbnail.visibility = View.GONE
-        binding.playerView.requestLayout()   // ⭐ 핵심
+        binding.playerView.visibility = View.VISIBLE
+        binding.playerView.requestLayout()
 
         if (player == null) {
-            player = ExoPlayer.Builder(requireContext()).build()
-            binding.playerView.player = player
-        }
+            // ⭐ Redirect 허용 DataSource
+            val httpDataSourceFactory = DefaultHttpDataSource.Factory()
+                .setAllowCrossProtocolRedirects(true)
 
-        player?.apply {
-            setMediaItem(MediaItem.fromUri(url))
-            prepare()
-            playWhenReady = true
+            val dataSourceFactory = DefaultDataSource.Factory(
+                requireContext(),
+                httpDataSourceFactory
+            )
+
+            val mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory)
+                .createMediaSource(MediaItem.fromUri(url))
+
+            player = ExoPlayer.Builder(requireContext()).build().also {
+                binding.playerView.player = it
+                it.setMediaSource(mediaSource)
+                it.prepare()
+                it.playWhenReady = true
+            }
+        } else {
+            player?.playWhenReady = true
         }
     }
+
 
     private fun updateFavoriteIcon() {
         val icon =
@@ -170,7 +187,6 @@ class DictionaryDetailFragment : Fragment() {
     override fun onStop() {
         super.onStop()
         player?.pause()
-        player?.clearVideoSurface()   // surface 꼬임 방지
     }
 
     override fun onDestroyView() {

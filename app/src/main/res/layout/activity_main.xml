@@ -22,7 +22,7 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
         android:layout_width="0dp"
-        android:layout_height="75dp"
+        android:layout_height="110dp"
         android:background="@drawable/tabbar_bg"
         app:menu="@menu/bottom_nav_menu"
         app:itemIconTint="@color/tab_selector"

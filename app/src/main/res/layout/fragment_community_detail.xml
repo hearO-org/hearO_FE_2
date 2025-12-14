@@ -161,7 +161,7 @@
                             android:id="@+id/postTimeAndView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="방금 전 · 👁 0"
+                            android:text="방금 전 "
                             android:textColor="#777"
                             android:textSize="12sp" />
                     </LinearLayout>

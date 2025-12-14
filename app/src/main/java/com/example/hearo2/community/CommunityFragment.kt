@@ -17,6 +17,7 @@ class CommunityFragment : Fragment() {
     private lateinit var binding: FragmentCommunityBinding
     private lateinit var adapter: PostAdapter
     private val repository = PostRepository()
+    private var selectedCategory: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,6 +32,7 @@ class CommunityFragment : Fragment() {
 
         setupRecyclerView()
         loadPostList()
+        setupCategoryTabs()
 
         binding.fabWrite.setOnClickListener {
             findNavController().navigate(
@@ -53,6 +55,46 @@ class CommunityFragment : Fragment() {
 
         binding.recyclerPost.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerPost.adapter = adapter
+    }
+
+    private fun setupCategoryTabs() {
+        val tabs = listOf(
+            binding.tabAll to null,
+            binding.tabGeneral to "GENERAL",
+            binding.tabQuestion to "QUESTION",
+            binding.tabReview to "REVIEW",
+            binding.tabSign to "SIGN_INFO",
+            binding.tabSafety to "SAFETY",
+            binding.tabPolicy to "POLICY",
+            binding.tabJob to "JOB"
+        )
+
+        tabs.forEach { (view, category) ->
+            view.setOnClickListener {
+                selectedCategory = category
+                updateTabUI(view)
+                loadPostList()
+            }
+        }
+
+        binding.tabAll.isSelected = true
+    }
+
+    private fun updateTabUI(selected: View) {
+        val tabs = listOf(
+            binding.tabAll,
+            binding.tabGeneral,
+            binding.tabQuestion,
+            binding.tabReview,
+            binding.tabSign,
+            binding.tabSafety,
+            binding.tabPolicy,
+            binding.tabJob
+        )
+
+        tabs.forEach {
+            it.isSelected = (it == selected)
+        }
     }
 
     /** ⭐ 스크랩 토글 */
@@ -88,10 +130,22 @@ class CommunityFragment : Fragment() {
     private fun loadPostList() {
         lifecycleScope.launch {
             try {
-                val response = repository.loadPostList(page = 0, size = 20)
-                if (response.success) {
-                    adapter.submitList(response.data.content)
+                val res =
+                    if (selectedCategory == null)
+                        repository.loadPostList(0, 20)
+                    else
+                        repository.searchPosts(
+                            query = null,
+                            category = selectedCategory,
+                            tag = null,
+                            page = 0,
+                            size = 20
+                        )
+
+                if (res.success) {
+                    adapter.submitList(res.data.content)
                 }
+
             } catch (e: Exception) {
                 e.printStackTrace()
             }

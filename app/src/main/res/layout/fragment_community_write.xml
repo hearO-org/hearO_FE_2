@@ -174,17 +174,20 @@
                     <TextView
                         style="@style/TabChipStyle"
                         android:text="안전/대처"
-                        android:tag="SAFETY"/>
+                        android:tag="SAFETY"
+                        android:layout_marginTop="10dp"/>
 
                     <TextView
                         style="@style/TabChipStyle"
                         android:text="정책/지원"
-                        android:tag="POLICY"/>
+                        android:tag="POLICY"
+                        android:layout_marginTop="10dp"/>
 
                     <TextView
                         style="@style/TabChipStyle"
                         android:text="취업/교육"
-                        android:tag="JOB"/>
+                        android:tag="JOB"
+                        android:layout_marginTop="10dp"/>
 
                 </com.google.android.flexbox.FlexboxLayout>
 
@@ -216,20 +219,10 @@
                     android:lineSpacingExtra="6dp"
                     android:minHeight="50dp"
                     android:background="@android:color/transparent"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="35dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-                <TextView
-                    android:id="@+id/tvTitleCount"
-                    android:text="0/100"
-                    android:textSize="12sp"
-                    android:textColor="#888"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:gravity="end"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
             </androidx.cardview.widget.CardView>
 
 
@@ -263,16 +256,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-                <TextView
-                    android:id="@+id/tvContentCount"
-                    android:text="0/2000"
-                    android:textSize="12sp"
-                    android:textColor="#888"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:gravity="end"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
             </androidx.cardview.widget.CardView>
 
 

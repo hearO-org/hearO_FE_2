@@ -236,6 +236,7 @@
                     android:visibility="gone"
                     app:use_controller="true"
                     app:resize_mode="fit"
+                    app:surface_type="texture_view"
                     android:background="@android:color/black"/>
 
                 <!-- 재생 전 썸네일 -->

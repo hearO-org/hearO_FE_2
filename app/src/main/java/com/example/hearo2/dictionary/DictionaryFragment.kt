@@ -142,30 +142,16 @@ class DictionaryFragment : Fragment() {
         }
 
         val filtered = list.filter { item ->
-            val serverCategory = item.categoryType ?: return@filter false
+            val c = item.categoryType ?: return@filter false
 
             when (selectedCategory) {
-                "경제" ->
-                    serverCategory.contains("경제")
-
-                "사회생활" ->
-                    serverCategory.contains("사회")
-
-                "정치" ->
-                    serverCategory.contains("정치")
-
-                "인간" ->
-                    serverCategory.contains("인간")
-
-                "식생활" ->
-                    serverCategory.contains("식생활")
-
-                "교육" ->
-                    serverCategory.contains("교육")
-
-                "종교" ->
-                    serverCategory.contains("종교")
-
+                "경제" -> c.contains("경제")
+                "정치" -> c.contains("정치")
+                "사회생활" -> c.contains("사회")
+                "인간" -> c.contains("인간")
+                "식생활" -> c.contains("식생활")
+                "교육" -> c.contains("교육")
+                "종교" -> c.contains("종교")
                 else -> false
             }
         }

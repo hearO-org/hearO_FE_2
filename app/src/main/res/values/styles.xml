@@ -59,9 +59,9 @@
         <item name="android:paddingStart">12dp</item>
         <item name="android:paddingEnd">12dp</item>
         <item name="android:gravity">center</item>
-        <item name="android:textColor">#666666</item>
         <item name="android:textSize">13sp</item>
-        <item name="android:background">@drawable/keyword_unselected</item>
+        <item name="android:textColor">@color/tab_text_color</item>
+        <item name="android:background">@drawable/bg_tab_chip</item>
         <item name="android:layout_marginEnd">10dp</item>
     </style>
 

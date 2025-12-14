@@ -15,7 +15,7 @@ import java.io.File
 /**
  * 항상 마이크를 감지하는 ForegroundService
  * 3초마다 녹음 → AI 분석
- * 사이렌 / 경적 감지 시 알림 → 클릭 시 홈 화면 이동
+ * ✅ siren / car_horn 일 때만 알림
  */
 class SoundDetectionService : Service() {
 
@@ -34,10 +34,15 @@ class SoundDetectionService : Service() {
         const val EXTRA_LABEL = "EXTRA_LABEL"
         const val EXTRA_CONFIDENCE = "EXTRA_CONFIDENCE"
         const val EXTRA_ALERT = "EXTRA_ALERT"
+
+        // ⏱ 알림 쿨타임 (밀리초)
+        private const val ALERT_COOLDOWN_MS = 10_000L
     }
 
     private lateinit var audioManager: AudioRecordManager
     private var serviceJob: Job? = null
+
+    private var lastAlertTime = 0L
 
     // ==================================================
     // Lifecycle
@@ -74,32 +79,62 @@ class SoundDetectionService : Service() {
             while (isActive) {
 
                 val wavFile: File? = audioManager.recordOnce(3000)
-
-                if (wavFile != null) {
-                    val result = SoundRepository.detectSound(wavFile)
-
-                    if (result != null) {
-                        Log.d(TAG, "AI 분석 완료: ${result.label}")
-
-                        // ✅ HomeFragment 결과 전달
-                        sendResultBroadcast(result)
-
-                        // ✅ 위험 소리 → 알림
-                        if (
-                            result.label in listOf("siren", "car_horn") &&
-                            result.confidence >= 0.7
-                        ) {
-                            showDangerNotification(
-                                label = result.label,
-                                confidence = result.confidence
-                            )
-                        }
-                    }
+                if (wavFile == null) {
+                    delay(500)
+                    continue
                 }
+
+                val result = SoundRepository.detectSound(wavFile)
+                if (result == null) {
+                    delay(500)
+                    continue
+                }
+
+                Log.d(TAG, "AI 분석 완료: ${result.label}")
+
+                // 1️⃣ HomeFragment 전달 (모든 결과)
+                sendResultBroadcast(result)
+
+                // 2️⃣ 🚨 알림은 엄격하게 제한
+                handleDangerAlertIfNeeded(result)
 
                 delay(500)
             }
         }
+    }
+
+    // ==================================================
+    // 🚨 알림 조건 처리 (핵심)
+    // ==================================================
+    private fun handleDangerAlertIfNeeded(result: SoundResultModel) {
+
+        val label = result.label ?: return
+
+        // ❌ none / unknown / 기타 전부 차단
+        if (label !in listOf("siren", "car_horn")) {
+            Log.d(TAG, "알림 제외 라벨: $label")
+            return
+        }
+
+        // ❌ 신뢰도 낮으면 차단
+        if (result.confidence < 0.7) {
+            Log.d(TAG, "신뢰도 낮음: ${result.confidence}")
+            return
+        }
+
+        // ❌ 쿨타임 체크
+        val now = System.currentTimeMillis()
+        if (now - lastAlertTime < ALERT_COOLDOWN_MS) {
+            Log.d(TAG, "알림 쿨타임 중")
+            return
+        }
+
+        lastAlertTime = now
+
+        showDangerNotification(
+            label = label,
+            confidence = result.confidence
+        )
     }
 
     // ==================================================
@@ -115,27 +150,26 @@ class SoundDetectionService : Service() {
     }
 
     // ==================================================
-    // 🔔 위험 알림 (클릭 시 홈 이동)
+    // 🔔 위험 알림
     // ==================================================
     private fun showDangerNotification(label: String, confidence: Double) {
 
         val title = when (label) {
             "siren" -> "🚨 사이렌 감지"
             "car_horn" -> "🚗 경적 감지"
-            else -> "⚠️ 위험 소리 감지"
+            else -> return // 이론상 도달 안 함
         }
 
         val message =
             "주변에서 위험한 소리가 감지되었습니다.\n정확도 ${(confidence * 100).toInt()}%"
 
-        // ✅ 알림 클릭 → MainActivity → HomeFragment
         val intent = Intent(this, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
         }
 
         val pendingIntent = PendingIntent.getActivity(
             this,
-            System.currentTimeMillis().toInt(), // ✅ 중복 방지
+            0,
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
@@ -154,10 +188,7 @@ class SoundDetectionService : Service() {
         val manager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        manager.notify(
-            System.currentTimeMillis().toInt(),
-            notification
-        )
+        manager.notify(System.currentTimeMillis().toInt(), notification)
     }
 
     // ==================================================
