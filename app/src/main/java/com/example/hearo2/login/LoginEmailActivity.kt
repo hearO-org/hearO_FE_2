@@ -71,6 +71,8 @@ class LoginEmailActivity : AppCompatActivity() {
 
                 AuthPrefs.saveLoggedIn(this@LoginEmailActivity)
 
+                AuthPrefs.clearOnboarded(this@LoginEmailActivity)
+
                 if (!alreadyOnboarded) {
                     startActivity(Intent(this@LoginEmailActivity, SignUpProfileActivity::class.java))
                 } else {

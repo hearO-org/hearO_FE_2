@@ -8,6 +8,8 @@ import android.os.Looper
 import com.example.hearo2.MainActivity
 import com.example.hearo2.auth.AuthPrefs
 import com.example.hearo2.signup.SignUpInfoActivity
+import com.example.hearo2.signup.SignUpProfileActivity
+
 
 class SplashActivity : AppCompatActivity() {
 
@@ -39,7 +41,7 @@ class SplashActivity : AppCompatActivity() {
         // 2️⃣ 로그인은 했지만 온보딩 미완료 → 온보딩 시작
         // ================================================
         if (!onboarded) {
-            startActivity(Intent(this, SignUpInfoActivity::class.java))
+            startActivity(Intent(this, SignUpProfileActivity::class.java))
             finish()
             return
         }

@@ -20,6 +20,7 @@ class CommunityDetailFragment : Fragment() {
 
     private lateinit var binding: FragmentCommunityDetailBinding
     private lateinit var commentAdapter: CommentAdapter
+    private lateinit var imageAdapter: PostImageAdapter
 
     private val repository = PostRepository()
     private val commentList = mutableListOf<CommentModel>()
@@ -65,6 +66,22 @@ class CommunityDetailFragment : Fragment() {
 
                 isScrapped = post.scrapped
                 updateScrapIcon(isScrapped)
+
+                // ⭐ 이미지 처리
+                if (!post.images.isNullOrEmpty()) {
+                    binding.recyclerImages.visibility = View.VISIBLE
+
+                    imageAdapter = PostImageAdapter(post.images)
+
+                    binding.recyclerImages.apply {
+                        layoutManager = LinearLayoutManager(
+                            requireContext(),
+                            LinearLayoutManager.HORIZONTAL,
+                            false
+                        )
+                        adapter = imageAdapter
+                    }
+                }
 
             } catch (e: Exception) {
                 Toast.makeText(requireContext(), "게시글 로딩 실패", Toast.LENGTH_SHORT).show()
